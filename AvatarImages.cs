@@ -41,6 +41,16 @@ public static class AvatarImages
         }
         finally { viewport.QueueFree(); }
     }
+    internal static ImageTexture? CopyOpeningIcon(Texture2D? texture)
+    {
+        // 原版从主菜单切入冒险时会释放未出战职业的顶栏图标。开场只保留这张图自己的纹理。
+        if (texture == null || !AvatarAssets.Usable(texture)
+            || !texture.ResourcePath.GetFile().StartsWith("character_icon_", StringComparison.OrdinalIgnoreCase))
+            return null;
+        using var image = texture.GetImage();
+        return image == null || image.IsEmpty() ? null : ImageTexture.CreateFromImage(image);
+    }
+
     private static Image TextureImage(Texture2D texture)
     {
         // 原版卡图使用压缩图集；AtlasTexture.GetImage 直接裁剪会得到空图，先解压图集再取区域。

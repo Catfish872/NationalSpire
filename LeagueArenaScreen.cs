@@ -171,5 +171,16 @@ public partial class CareerScreen
             overlay.Impact=1;var flash=overlay.CreateTween();flash.TweenMethod(Callable.From<float>(v=>overlay.Impact=v),1f,0f,.40);await tree.ToSignal(flash,Tween.SignalName.Finished);
         }
     }
-    internal Task FormalGate(CareerData d,CareerMatch match,string character,Func<Task> begin)=>OpeningGate(match.Event,CareerAvatars.ForPerson(d,"player"),0,CareerEngine.Name(d),character,CareerAvatars.ForPerson(d,match.OpponentId),0,CareerEngine.DisplayName(d,match.OpponentId),ArenaCharacterName(CareerEngine.Person(d,match.OpponentId)?.Character??""),"正式比赛",begin);
+    internal async Task FormalGate(CareerData d, CareerMatch match, string character, Func<Task> begin)
+    {
+        var home = CareerAvatars.ForPerson(d, "player");
+        var away = CareerAvatars.ForPerson(d, match.OpponentId);
+        using var homeIcon = AvatarImages.CopyOpeningIcon(home.Texture);
+        using var awayIcon = AvatarImages.CopyOpeningIcon(away.Texture);
+        if (homeIcon != null) home = home with { Texture = homeIcon };
+        if (awayIcon != null) away = away with { Texture = awayIcon };
+        await OpeningGate(match.Event, home, 0, CareerEngine.Name(d), character, away, 0,
+            CareerEngine.DisplayName(d, match.OpponentId),
+            ArenaCharacterName(CareerEngine.Person(d, match.OpponentId)?.Character ?? ""), "正式比赛", begin);
+    }
 }

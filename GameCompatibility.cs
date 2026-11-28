@@ -7,6 +7,9 @@ using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
+using MegaCrit.Sts2.Core.Timeline;
+using MegaCrit.Sts2.Core.Timeline.Epochs;
+using MegaCrit.Sts2.Core.Unlocks;
 
 namespace NationalSpire;
 
@@ -22,12 +25,23 @@ public static class GameCompatibility
             : RuntimeApi.Bind(typeof(NGame), "StartNewSingleplayerRun", false, typeof(CharacterModel), typeof(bool), acts,
                 typeof(ModifierModel[]), typeof(string), typeof(GameMode), typeof(int));
     }
-    public static Task StartSingleplayer(MethodInfo start, NGame game, CharacterModel character, List<ActModel> acts, string seed, int ascension, string mode = MatchModes.Standard)
+    internal static UnlockState MatchUnlocks(string mode)
+    {
+        var unlocks = SaveManager.Instance.GenerateUnlockStateFromProgress();
+        if (mode != MatchModes.Blitz || unlocks.IsEpochRevealed<NeowEpoch>()) return unlocks;
+        // 快速赛会在绘制第一幕地图时读取先古。仅补充本局使用的解锁资料。
+        var match = unlocks.ToSerializable();
+        match.UnlockedEpochs.Add(EpochModel.GetId<NeowEpoch>());
+        return UnlockState.FromSerializable(match);
+    }
+    public static Task StartSingleplayer(MethodInfo start, NGame game, CharacterModel character, List<ActModel> acts, string seed, int ascension, string mode = MatchModes.Standard) =>
+        StartSingleplayer(start, game, character, acts, seed, ascension, mode, MatchUnlocks(mode));
+
+    internal static Task StartSingleplayer(MethodInfo start, NGame game, CharacterModel character, List<ActModel> acts, string seed, int ascension, string mode, UnlockState unlocks)
     {
         if (start.GetParameters()[0].ParameterType == typeof(Player))
         {
-            // 与旧开局内部的读取时机一致，保留当前档案的卡牌、遗物解锁进度和单人编号。
-            var player = Player.CreateForNewRun(character, SaveManager.Instance.GenerateUnlockStateFromProgress(), 1UL);
+            var player = Player.CreateForNewRun(character, unlocks, 1UL);
             return (Task)RuntimeApi.Invoke(start, game, player, true, acts, Array.Empty<ModifierModel>(), seed, MatchModes.Native(mode), false, ascension)!;
         }
         return (Task)RuntimeApi.Invoke(start, game, character, true, acts, Array.Empty<ModifierModel>(), seed, MatchModes.Native(mode), ascension)!;

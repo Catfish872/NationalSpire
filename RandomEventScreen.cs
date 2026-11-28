@@ -10,15 +10,17 @@ public partial class CareerScreen
     {
         foreach (var e in d.Life.RandomEvents.Where(e => e.Day == day && e.State != "skipped"))
         {
-            var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); parent.AddChild(row);
             var button = new EventStoryButton { Name = "QuestionEvent_" + e.Id, Caption = e.State == "complete" ? e.Title : "今日际遇", Detail = e.State == "complete" ? "查看你的选择与这段经历" : day > d.Day ? GameCalendar.Text(d, day) + " · 随机事件" : "生活中的另一种可能", Mark = "?", CustomMinimumSize = new(0, 92), SizeFlagsHorizontal = SizeFlags.ExpandFill };
             button.Disabled = day != d.Day && e.State != "complete";
-            button.Pressed += () => OpenRandomEvent(e.Id); row.AddChild(button);
+            button.Pressed += () => OpenRandomEvent(e.Id);
             if (e.State != "complete")
             {
-                var skip = Button("跳过事件", () => EventCommand("event-skip", id: e.Id), 116);
-                skip.Name = "SkipCalendarEvent_" + e.Id; skip.SizeFlagsVertical = SizeFlags.ShrinkCenter; row.AddChild(skip);
+                var skip = FramedAction("跳过事件", () => EventCommand("event-skip", id: e.Id),
+                    "fast-forward", trailing: true, width: 124, height: 43, quiet: true, ink: _muted);
+                skip.Name = "SkipCalendarEvent_" + e.Id;
+                button.TrailingAction = skip;
             }
+            parent.AddChild(button);
         }
     }
     private void CalendarEncounters(CareerData data,VBoxContainer box,int day,IEnumerable<RandomEventRecord> events)
@@ -325,6 +327,7 @@ public partial class EventStoryButton : Button
     public string Caption { get => _caption; set { _caption = value; if (_captionLabel != null) { if (Paint != null) Paint(_captionLabel, value); else _captionLabel.Text = value; } } }
     public string Detail { get; set; } = "";
     public string Mark { get; set; } = "?";
+    internal Button? TrailingAction { get; set; }
     public override void _Ready()
     {
         _normal = CareerVisuals.Box("1b3040", "456374", 8, 0); _hover = CareerVisuals.Box("294451", "94c4bd", 8, 0); _disabled = CareerVisuals.Box("17232e", "456374", 8, 0);
@@ -332,7 +335,18 @@ public partial class EventStoryButton : Button
         foreach (string state in new[] { "normal", "hover", "pressed", "focus", "disabled" }) AddThemeStyleboxOverride(state, new StyleBoxEmpty());
         var margin = new MarginContainer { MouseFilter = MouseFilterEnum.Ignore }; AddChild(margin); margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         margin.AddThemeConstantOverride("margin_left", 72); margin.AddThemeConstantOverride("margin_right", 20); margin.AddThemeConstantOverride("margin_top", 17); margin.AddThemeConstantOverride("margin_bottom", 17);
-        var box = new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore }; box.AddThemeConstantOverride("separation", 8); margin.AddChild(box);
+        var box = new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        box.AddThemeConstantOverride("separation", 8);
+        if (TrailingAction is { } action)
+        {
+            var row = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
+            row.AddThemeConstantOverride("separation", 16);
+            margin.AddChild(row);
+            row.AddChild(box);
+            action.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+            row.AddChild(action);
+        }
+        else margin.AddChild(box);
         _captionLabel = new RichTextLabel { FitContent = true, ScrollActive = false, MouseFilter = MouseFilterEnum.Ignore }; _captionLabel.AddThemeFontSizeOverride("normal_font_size", 20); _captionLabel.AddThemeColorOverride("default_color", new("ecdbb9")); box.AddChild(_captionLabel); Caption = _caption;
         var detail = new Label { Text = Detail, AutowrapMode = TextServer.AutowrapMode.WordSmart, MouseFilter = MouseFilterEnum.Ignore }; detail.AddThemeFontSizeOverride("font_size", 15); detail.AddThemeColorOverride("font_color", new("aac1c9")); box.AddChild(detail);
         if (Mark == "?")

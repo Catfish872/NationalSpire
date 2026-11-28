@@ -49,7 +49,7 @@ public partial class CareerScreen
             int version = _renderVersion;
             Callable.From(() =>
             {
-                if (IsInstanceValid(this) && IsInsideTree() && !IsQueuedForDeletion() && _renderVersion == version) RefreshClub();
+                if (IsInstanceValid(this) && IsInsideTree() && !IsQueuedForDeletion() && _renderVersion == version) RenderKeepingScroll();
             }).CallDeferred();
             return true;
         }, "确认转任", box =>

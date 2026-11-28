@@ -162,7 +162,7 @@ public partial class CareerScreen
     private BroadcastTransition? _pageEffect;
     private void AnimatePage()
     {
-        string location = $"{_tab}:{_personId}:{_postId}:{_worldSection}:{_competitionId}:{_profileFilter}:{_communityFilter}:{_calendarMonth}:{_calendarMode}:{_fixtureScope}:{_fixtureInternational}:{_board}:{_rankRegion}:{_rankSeason}:{_shopPage}";
+        string location = $"{_tab}:{_personId}:{_postId}:{_worldSection}:{_competitionId}:{_profileFilter}:{_openUnreadUpdates}:{_calendarMonth}:{_calendarMode}:{_fixtureScope}:{_fixtureInternational}:{_board}:{_rankRegion}:{_rankSeason}:{_shopPage}";
         _pageTween?.Kill(); _content.Modulate = Colors.White;
         if (_pageEffect != null) _pageEffect.Hide();
         if (_visualLocation == location) return;

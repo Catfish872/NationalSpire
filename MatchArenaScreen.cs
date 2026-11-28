@@ -1,5 +1,4 @@
 using Godot;
-using MegaCrit.Sts2.Core.Models;
 
 namespace NationalSpire;
 
@@ -49,48 +48,7 @@ public partial class CareerScreen
         return button;
     }
 
-    private const int CharacterTileHeight = 60, CharacterTileInset = 18, CharacterCaptionGap = 16;
-    private static OptionButton ArenaCharacterMenu(IReadOnlyList<CharacterModel> characters, int first, int selected, Action<int> choose)
-    {
-        var picker = new OptionButton { Name = "OtherCharacters", AccessibilityName = "选择其他出战角色",
-            CustomMinimumSize = new(0, CharacterTileHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill, Alignment = HorizontalAlignment.Left,
-            FitToLongestItem = false, ClipText = true, AllowReselect = true,
-            TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, MouseDefaultCursorShape = CursorShape.PointingHand };
-        var theme = CareerVisuals.CreateTheme();
-        foreach (string state in ButtonStates)
-        {
-            var style = (StyleBoxFlat)theme.GetStylebox(state, "OptionButton").Duplicate();
-            style.ContentMarginLeft = style.ContentMarginRight = CharacterTileInset;
-            style.ContentMarginTop = style.ContentMarginBottom = (CharacterTileHeight - CareerAvatarIcon.Pixels) / 2;
-            picker.AddThemeStyleboxOverride(state, style);
-            picker.AddThemeColorOverride("icon_" + state + "_color", Colors.White);
-        }
-        picker.AddThemeColorOverride("icon_focus_color", Colors.White);
-        picker.AddThemeConstantOverride("icon_max_width", CareerAvatarIcon.Pixels);
-        picker.AddThemeConstantOverride("h_separation", CharacterCaptionGap);
-        picker.AddThemeFontSizeOverride("font_size", 22);
-        var menu = picker.GetPopup();
-        menu.AddThemeConstantOverride("icon_max_width", CareerAvatarIcon.Pixels);
-        menu.AddThemeConstantOverride("h_separation", CharacterCaptionGap);
-        for (int i = first; i < characters.Count; i++) picker.AddItem(PlayerArchive.CharacterName(characters[i].Id), i);
-
-        void LoadPortrait(int item)
-        {
-            if (picker.GetItemIcon(item) != null) return;
-            var art = AvatarAssets.Load(characters[picker.GetItemId(item)].Id.ToString(), 0, false);
-            picker.SetItemIcon(item, new CareerAvatarIcon { Art = art });
-        }
-        if (selected >= first && selected < characters.Count) LoadPortrait(selected - first);
-        void LoadMenuPortraits()
-        {
-            for (int i = 0; i < picker.ItemCount; i++) LoadPortrait(i);
-            menu.AboutToPopup -= LoadMenuPortraits;
-        }
-        menu.AboutToPopup += LoadMenuPortraits;
-        picker.ItemSelected += item => { LoadPortrait((int)item); choose(picker.GetItemId((int)item)); };
-        return picker;
-    }
-
+    private const int CharacterTileHeight = 60, CharacterPortraitSize = 48, CharacterTileInset = 18, CharacterCaptionGap = 16;
     private static Button ArenaTextAction(string title, string icon, Color hover, Action activate)
     {
         const int iconSize = 20, fontSize = 16, gap = 7;

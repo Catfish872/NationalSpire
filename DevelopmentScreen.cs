@@ -15,7 +15,7 @@ public partial class CareerScreen
         foreach (var row in CircuitLedger.NationTable(d))
         {
             rank++; string country = row.Country;
-            nations.AddChild(FilterButton($"{rank:00}  {country}\n{row.Points:N0}", country == _developmentCountry, () => { _developmentCountry = country; Render(); }, 160));
+            nations.AddChild(FilterButton($"{rank:00}  {country}\n{row.Points:N0}", country == _developmentCountry, () => { _developmentCountry = country; RenderKeepingScroll(); }, 160));
         }
         var main = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; columns.AddChild(main);
         var nation = d.Esports.Nations.First(n => n.Country == _developmentCountry);
@@ -34,7 +34,7 @@ public partial class CareerScreen
             foreach (var indicator in group)
             {
                 int level = NationalDevelopment.Level(nation, indicator.Id);
-                var button = FilterButton(indicator.Name + $"  {level:00}", _developmentIndicator == indicator.Id, () => { _developmentIndicator = indicator.Id; Render(); }, 0);
+                var button = FilterButton(indicator.Name + $"  {level:00}", _developmentIndicator == indicator.Id, () => { _developmentIndicator = indicator.Id; RenderKeepingScroll(); }, 0);
                 button.AddThemeColorOverride("font_color", MarketVisuals.LevelColor(level)); box.AddChild(button);
                 double enhancement = NationalDevelopment.Enhancement(nation, indicator.Id, d.Day);
                 box.AddChild(new DevelopmentGauge { Level = level, Enhancement = enhancement });

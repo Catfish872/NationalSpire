@@ -10,9 +10,10 @@
     <Sts2Dir Condition="'$(Sts2Dir)' == ''">E:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Dir>
     <Sts2DataDir>$(Sts2Dir)/data_sts2_windows_x86_64</Sts2DataDir>
   </PropertyGroup>
+  <Import Project="EnginePackage.targets" />
   <ItemGroup>
     <Compile Include="../../LeagueOwnTurnLoss.cs" Link="LeagueOwnTurnLoss.cs" />
-    <Reference Include="CombatSolver" HintPath="$(MSBuildProjectDirectory)/obj/packages/solver/CombatSolver.dll" Private="false" />
+    <Reference Include="CombatSolver" HintPath="$(EngineRoot)/solver/CombatSolver.dll" Private="false" />
     <Reference Include="0Harmony" HintPath="$(Sts2DataDir)/0Harmony.dll" Private="false" />
     <Reference Include="sts2" HintPath="$(Sts2DataDir)/sts2.dll" Private="false" />
     <Reference Include="GodotSharp" HintPath="$(Sts2DataDir)/GodotSharp.dll" Private="false" />
@@ -24,5 +25,4 @@
       <Analyzer Remove="@(Analyzer)" Condition="'%(Analyzer.Filename)' == 'Godot.SourceGenerators'" />
     </ItemGroup>
   </Target>
-  <Import Project="EnginePackage.targets" />
 </Project>

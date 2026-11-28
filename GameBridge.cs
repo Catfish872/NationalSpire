@@ -59,7 +59,7 @@ public static class GameBridge
             CareerStore.Save(data);
             stage = "读取游戏解锁资料";
             trace.Stage(stage);
-            var unlock = SaveManager.Instance.GenerateUnlockStateFromProgress();
+            var unlock = GameCompatibility.MatchUnlocks(mode);
             stage = "查找章节选择接口";
             trace.Stage(stage);
             var select = RuntimeApi.Bind(typeof(ActModel), "GetRandomList", true, typeof(Rng), unlock.GetType(), typeof(bool));
@@ -110,7 +110,7 @@ public static class GameBridge
                 loading.Stage(stage);
                 trace.Stage(stage);
                 trace.Method(start, "begin");
-                await GameCompatibility.StartSingleplayer(start, game, character, acts, match.Seed, MatchModes.NativeAscension(mode, ascension), mode);
+                await GameCompatibility.StartSingleplayer(start, game, character, acts, match.Seed, MatchModes.NativeAscension(mode, ascension), mode, unlock);
                 trace.Method(start, "complete");
                 stage = "保存开局成功后的生涯数据";
                 trace.Stage(stage);

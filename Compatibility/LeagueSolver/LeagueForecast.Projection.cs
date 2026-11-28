@@ -1,66 +1,83 @@
 using CombatSolver;
-using CombatSolver.Engine.Common;
+using CombatSolver.HotKernel;
+using CombatSolver.HotSearch;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.FoolArrows;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Blitz;
-using MegaCrit.Sts2.Core.Models.Dread;
+using MegaCrit.Sts2.Core.Models.Monsters.Mocks;
 using MegaCrit.Sts2.Core.Runs;
 using System.Runtime.CompilerServices;
 
 namespace NationalSpire.Solver;
-
-public sealed partial class LeagueForecast {
-    private readonly HashSet<Type> _unmodelledPlays=[];
-
-    [UnsafeAccessor(UnsafeAccessorKind.Method,Name="set_RunModels")]
-    private static extern void SetRunRules(RunState run,IReadOnlyList<RunModel> rules);
-    private static void ProjectRunRules(RunState run){
-        // 与内置 SimulatedCombatState 的规则复制范围一致。金币等效果还会从临时 RunState 读取同一份名单。
-        static bool Known(RunModel rule)=>rule is MultiplayerScalingModel or BlitzRunModel or DreadRunModel;
-        if(run.RunModels.Any(r=>!Known(r)))SetRunRules(run,run.RunModels.Where(Known).ToArray());
+public sealed partial class LeagueForecast(Player rival,int tier,string[] setup,Func<int,int> added,int preference,CancellationToken exit) : IDisposable {
+    private readonly Player _live=rival;
+    private Player? _actor;
+    private readonly Dictionary<CardModel,CardModel> _originals=new(ReferenceEqualityComparer.Instance);
+    private static readonly AccessTools.FieldRef<PlayerCombatState,int> StarBalance=AccessTools.FieldRefAccess<PlayerCombatState,int>("_stars");
+    public static void Prepare(){
+        InstallDuelHooks();
+        SolverWarmup.StartBackgroundWarmup();
+        // 后台预加载提前编译常用入口，第一回合的时间预算用于比较牌序。
+        foreach(var type in new[]{typeof(HotCombatEngine),typeof(HotEvaluator)})
+            foreach(var method in AccessTools.GetDeclaredMethods(type))
+                if(method.Name is nameof(HotCombatEngine.Step) or nameof(HotCombatEngine.EnumerateLegalActions)
+                    or nameof(HotEvaluator.EvaluateState) or nameof(HotEvaluator.ExtractStage1))
+                    RuntimeHelpers.PrepareMethod(method.MethodHandle);
     }
+    private readonly Dictionary<Creature,int> _aims=[];
+    private CombatRootSnapshot Capture(bool attacking){
+        var actor=Player.CreateForNewRun(_live.Character,_live.UnlockState,MegaCrit.Sts2.Core.Context.LocalContext.NetId ?? 1);_actor=actor;
+        var run=RunState.CreateForNewRun([actor],_live.RunState.Acts.Select(a=>a.CanonicalInstance.ToMutable()).ToList(),[],GameMode.Standard,false,0,_live.RunState.Rng.StringSeed);
 
-    [ThreadStatic] private static CaptureProjection? _capture;
-    private sealed class CaptureProjection : IDisposable {
-        internal readonly RunState Run;
-        internal readonly CombatState Board;
-        internal readonly HashSet<Type> Unmodelled;
-        internal readonly AbstractModel[] RunSubscribers,CombatSubscribers;
-        private readonly CaptureProjection? _previous;
-        internal CaptureProjection(RunState run,CombatState board,HashSet<Type> unmodelled){
-            Run=run;Board=board;Unmodelled=unmodelled;Unmodelled.Clear();
-            RunSubscribers=Supported(ModHelper.IterateAllRunStateSubscribers(run),"run");
-            CombatSubscribers=Supported(ModHelper.IterateAllCombatStateSubscribers(board),"combat");
-            _previous=_capture;_capture=this;
+        var board=new CombatState(runState:run,badgeModels:run.BadgeModels,runModels:run.RunModels);board.AddPlayer(actor);actor.ResetCombatState();
+        foreach(var r in actor.Relics.ToArray())actor.RemoveRelicInternal(r,true);
+        foreach(var r in _live.Relics)actor.AddRelicInternal(RelicModel.FromSerializable(r.ToSerializable()),-1,true);
+        var realTargets=_live.Creature.CombatState!.GetOpponentsOf(_live.Creature).Where(c=>c.IsHittable).ToArray();
+        var targets=realTargets.Select(other=>{
+            MonsterModel enemy=attacking?ModelDb.Monster<MockAttackMonster>():ModelDb.Monster<MockPlatingMonster>();var target=board.CreateCreature(enemy.ToMutable(),CombatSide.Enemy,null);
+            board.AddCreature(target);target.Monster!.SetUpForCombat();target.Monster.RollMove([actor.Creature]);_aims[target]=checked((int)other.CombatId!.Value);return target;
+        }).ToArray();
+        var old=_live.PlayerCombatState!;var ps=actor.PlayerCombatState!;
+        var arrows=new Dictionary<ArrowSlot,ArrowSlot>();var slots=(List<ArrowSlot>)AccessTools.Field(typeof(PlayerCombatState),"_arrows").GetValue(ps)!;
+        slots.Clear();
+        foreach(var slot in old.Arrows){
+            var next=new ArrowSlot(actor){Status=slot.Status};
+            slots.Add(next);arrows.Add(slot,next);
         }
-        private static AbstractModel[] Supported(IEnumerable<AbstractModel> models,string scope)=>
-            models.Where(m=>{
-                try{PredictionModHookSubscriberCapture.ValidateSubscriber(m,scope);return true;}
-                catch(NotSupportedException){return false;}
-            }).ToArray();
-        public void Dispose()=>_capture=_previous;
-    }
+        ps.OrbQueue.Clear();ps.OrbQueue.AddCapacity(old.OrbQueue.Capacity-ps.OrbQueue.Capacity);
+        foreach(var orb in old.OrbQueue.Orbs){var clone=(OrbModel)orb.MutableClone();clone.Owner=null!;clone.Owner=actor;ps.OrbQueue.Insert(ps.OrbQueue.Orbs.Count,clone);}
+        void Copy(Creature src,Creature dst){
+            dst.SetMaxHpInternal(src.MaxHp);dst.SetCurrentHpInternal(src.CurrentHp);dst.GainBlockInternal(src.Block);
+            foreach(var power in src.Powers){if(src!=_live.Creature && power.GetType().Assembly!=typeof(PowerModel).Assembly)continue; if(power is ImpaledPower foreign&&!foreign.Arrows.Any(arrows.ContainsKey))continue;
+                var copy=(PowerModel)power.MutableClone();
+                if(copy is ImpaledPower impaled && power is ImpaledPower original)foreach(var a in original.Arrows)if(arrows.TryGetValue(a,out var arrow))impaled.AddArrow(arrow);
+                copy.Applier=power.Applier==_live.Creature?actor.Creature:Array.IndexOf(realTargets,power.Applier) is int i&&i>=0?targets[i]:null;copy.ApplyInternal(dst,power.Amount,true);}
+        }
+        Copy(_live.Creature,actor.Creature);for(int i=0;i<targets.Length;i++)Copy(realTargets[i],targets[i]);
+        if(_live.Osty is {} realPet){
+            var pet=board.CreateCreature(ModelDb.Monster<MegaCrit.Sts2.Core.Models.Monsters.Osty>().ToMutable(),CombatSide.Player,null);
+            ps.AddPetInternal(pet);board.AddCreature(pet);Copy(realPet,pet);
+        }
+        ps.GainEnergy(old.Energy-ps.Energy);StarBalance(ps)=old.Stars;
+        for(int i=1;i<old.TurnNumber;i++)ps.IncrementTurnNumber();
+        foreach(var pile in old.AllPiles){
+            var dest=ps.AllPiles.First(p=>p.Type==pile.Type);
+            foreach(var original in pile.Cards){var card=(CardModel)original.MutableClone();card.Owner=null!;board.AddCard(card,actor);dest.AddInternal(card,-1,true);_originals.Add(card,original);}
+        }
 
-    private static void InstallProjection(Harmony h){
-        h.Patch(AccessTools.Method(typeof(ModHelper),nameof(ModHelper.IterateAllRunStateSubscribers)),prefix:new HarmonyMethod(typeof(LeagueForecast),nameof(RunSubscribers)));
-        h.Patch(AccessTools.Method(typeof(ModHelper),nameof(ModHelper.IterateAllCombatStateSubscribers)),prefix:new HarmonyMethod(typeof(LeagueForecast),nameof(CombatSubscribers)));
-        h.Patch(AccessTools.Method(typeof(PredictionModPatchAudit),"AuditCardOnPlay"),finalizer:new HarmonyMethod(typeof(LeagueForecast),nameof(CardAudit)));
+        board.RoundNumber=_live.Creature.CombatState!.RoundNumber;run.Rng.LoadFromSerializable(_live.RunState.Rng.ToSerializable());_historyPlayer=_live;try{return CombatRootSnapshot.Capture(board,potionThresholds:PotionHpThresholds.Default);}finally{_historyPlayer=null;}
     }
-    // 只在同步复制这个临时战场时复用同一份名单；真实对局及其他求解器照常枚举。
-    private static bool RunSubscribers(RunState __0,ref IEnumerable<AbstractModel> __result){
-        if(_capture is not {} p||!ReferenceEquals(__0,p.Run))return true;
-        __result=p.RunSubscribers;return false;
+    private Dictionary<ushort,CardModel> OriginalCards(in CombatHotState state){
+        var result=new Dictionary<ushort,CardModel>();int index=0;
+        var ps=_actor!.PlayerCombatState!;
+        foreach(var pile in new[]{ps.Hand,ps.DrawPile,ps.DiscardPile,ps.ExhaustPile,ps.PlayPile})
+            foreach(var card in pile.Cards)result.Add(state.Cards[index++].CardUid,_originals[card]);
+        return result;
     }
-    private static bool CombatSubscribers(CombatState __0,ref IEnumerable<AbstractModel> __result){
-        if(_capture is not {} p||!ReferenceEquals(__0,p.Board))return true;
-        __result=p.CombatSubscribers;return false;
-    }
-    private static Exception? CardAudit(Type type,ref PredictionModPatchAudit.ForeignPatch? firstForeign,
-        AdaptedCardOnPlayMirrors.Registration? __result,Exception? __exception){
-        if(_capture is not {} p||(__exception is not NotSupportedException &&
-            !(__exception==null&&firstForeign!=null&&__result==null)))return __exception;
-        p.Unmodelled.Add(type);firstForeign=null;return null;
-    }
+    public void Dispose(){_aims.Clear();_originals.Clear();_actor?.PlayerCombatState?.AfterCombatEnd();_actor=null;}
 }

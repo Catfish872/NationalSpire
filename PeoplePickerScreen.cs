@@ -5,7 +5,7 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     /// <summary>群成员和商城附件共用搜索、分类、头像与可见行复用。</summary>
-    private void PeoplePicker(VBoxContainer box, IReadOnlyList<CareerPerson> candidates, HashSet<string> selected, bool single, Action changed, int height = 220, bool showPortraits = false, string initialFilter = "全部")
+    private void PeoplePicker(VBoxContainer box, IReadOnlyList<CareerPerson> candidates, HashSet<string> selected, bool single, Action changed, int height = 220, bool showPortraits = false, string initialFilter = "全部", IReadOnlySet<string>? lastEventPeople = null)
     {
         var d = ViewData; string search = "", filter = initialFilter;
         var portraits = new Dictionary<string, bool>();
@@ -58,12 +58,13 @@ public partial class CareerScreen
         {
             using var timing = UiPerformance.Measure(UiPerformance.Work.MemberFilter);
             people = candidates.Where(p => p.PublicName.Contains(search, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(search, StringComparison.OrdinalIgnoreCase))
-                .Where(p => filter switch { "熟悉的人" => familiar.Contains(p.Id), "同俱乐部" => d.Esports.ClubId.Length > 0 && p.ClubId == d.Esports.ClubId, "近期对手" => opponents.ContainsKey(p.Id), "近期发帖回帖者" => authors.ContainsKey(p.Id), _ => true })
+                .Where(p => filter switch { "熟悉的人" => familiar.Contains(p.Id), "同俱乐部" => d.Esports.ClubId.Length > 0 && p.ClubId == d.Esports.ClubId, "近期对手" => opponents.ContainsKey(p.Id), "近期发帖回帖者" => authors.ContainsKey(p.Id), "上次事件参与者" => lastEventPeople!.Contains(p.Id), _ => true })
                 .OrderBy(p => filter == "熟悉的人" ? -PrivateMessages.Favour(d, p.Id) : filter == "近期对手" ? opponents[p.Id] : filter == "近期发帖回帖者" ? authors[p.Id] : selected.Contains(p.Id) ? -1 : 0).ToArray();
             list.CustomMinimumSize = new(0, people.Length * rowHeight); scroll.ScrollVertical = 0; ShowRows();
             count.Text = people.Length == 0 ? "暂无匹配人物，请调整搜索或分类。" : "已选择 " + selected.Count + " 人 · 共 " + people.Length + " 人";
         }
-        foreach (string f in new[] { "全部", "熟悉的人", "同俱乐部", "近期对手", "近期发帖回帖者" })
+        string[] categories = ["全部", "熟悉的人", "同俱乐部", "近期对手", "近期发帖回帖者"];
+        foreach (string f in lastEventPeople == null ? categories.AsEnumerable() : categories.Append("上次事件参与者"))
         {
             var button = FilterButton(f, f == filter, () => { filter = f; foreach (var b in filters.GetChildren().OfType<Button>()) b.SetPressedNoSignal(b.Text == f); Refresh(); }, 0);
             button.ToggleMode = true; button.SetPressedNoSignal(f == filter); button.AddThemeFontSizeOverride("font_size", 14); button.CustomMinimumSize = new(0, 34); filters.AddChild(button);

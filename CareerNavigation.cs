@@ -5,7 +5,7 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     private sealed record Location(string Tab, string? Person, string? Post, string WorldSection, string? Competition,
-        string ProfileFilter, string CommunityFilter, int PostLimit, int SelectedDay, int Scroll, int ProfileLimit, string ProfileQuery, string LifeSection, int LifeLimit,
+        string ProfileFilter, bool OpenUnreadUpdates, int PostLimit, int SelectedDay, int Scroll, int ProfileLimit, string ProfileQuery, string LifeSection, int LifeLimit,
         string Group = "", int ChatScroll = 0, int ChatPage = 0, string PrivatePerson = "", string Event = "", DashboardLocation? Dashboard = null, ShopLocation? Shop = null, bool ChatOpen = false);
     private sealed record ShopLocation(bool Owned, string Tier, string Category, string Selected, int Page);
     private sealed record DashboardLocation(string Review, string Match, int Month, string Pane, string Plan, string Target, int PlanScroll,
@@ -17,7 +17,7 @@ public partial class CareerScreen
     private Button _backButton = null!;
     private Label _breadcrumb = null!;
     private Location CaptureLocation() => new(_tab, _personId, _postId, _worldSection, _competitionId,
-        _profileFilter, _communityFilter, _postLimit, _selectedDay, _scroll.ScrollVertical, _profileLimit, _profileQuery, _lifeSection, _lifeHistoryLimit,
+        _profileFilter, _openUnreadUpdates, _postLimit, _selectedDay, _scroll.ScrollVertical, _profileLimit, _profileQuery, _lifeSection, _lifeHistoryLimit,
         ChatOpen: _privateOverlay != null, Group: _privateGroup, PrivatePerson: _privatePerson,
         ChatScroll: _privateOverlay == null ? 0 : _privateScroll?.ScrollVertical ?? 0, ChatPage: _privateOverlay == null ? 0 : ChatPage,
         Event: _eventView?.Visible == true ? _eventId : "", Dashboard: new(_reviewId,_arenaMatchId,_calendarMonth,_calendarMode,_planKey,
@@ -34,7 +34,7 @@ public partial class CareerScreen
         }
         _tab = location.Tab; _personId = location.Person; _postId = location.Post;
         _worldSection = location.WorldSection; _competitionId = location.Competition;
-        _profileFilter = location.ProfileFilter; _communityFilter = location.CommunityFilter;
+        _profileFilter = location.ProfileFilter; _openUnreadUpdates = location.OpenUnreadUpdates;
         _postLimit = location.PostLimit; _selectedDay = location.SelectedDay;
         _profileLimit = location.ProfileLimit; _profileQuery = location.ProfileQuery;
         _lifeSection = location.LifeSection; _lifeHistoryLimit = location.LifeLimit;
@@ -80,7 +80,7 @@ public partial class CareerScreen
         if (_tab == "社区" && _postId == post.Id) return;
         Visit(() => { _tab = "社区"; _postId = post.Id; });
     }
-    private void OpenCommunity() => Visit(() => { _tab = "社区"; _postId = null; });
+    private void OpenCommunity() => Visit(() => { _tab = "社区"; _postId = null; _openUnreadUpdates = false; });
     private void OpenProfileList(string? filter = null)
     {
         void SelectFilter()
@@ -159,6 +159,6 @@ public partial class CareerScreen
         _profileLimit = 36; _profileQuery = ""; _lifeSection = "活动与计划"; _lifeHistoryLimit = 8;
         _personId = null; _postId = null; _competitionId = null; _worldSection = "国运榜";
         _ceremonySeason = 0; _ceremonySection = "获奖名单"; _ceremonyRules = false;
-        _communityFilter = "全部"; _profileFilter = "国内职业"; _postLimit = 30; _selectedDay = 0; _tab = "首页";
+        _openUnreadUpdates = false; _profileFilter = "国内职业"; _postLimit = 30; _selectedDay = 0; _tab = "首页";
     }
 }

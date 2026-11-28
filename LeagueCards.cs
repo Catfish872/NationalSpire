@@ -109,7 +109,18 @@ public static class LeagueCards
     public static int UpgradeCost(Entry entry)=>entry.Tier>=2?2:1;
     public static int Upgraded(LeagueAlbum a,string id)=>a.Upgrades.GetValueOrDefault(a.Captain)?.GetValueOrDefault(id)??0;
     public static int Points(LeagueAlbum a)=>a.Upgrades.GetValueOrDefault(a.Captain)?.Sum(p=>Catalog.TryGetValue(p.Key,out var e)?UpgradeCost(e)*p.Value:0)??0;
-    public static CardModel Improve(CardModel instance){instance.UpgradeInternal();instance.FinalizeUpgradeInternal();return instance;}
+    public static CardModel Improve(CardModel instance)
+    {
+        RuntimeApi.Invoke(Upgrade.Method, instance);
+        instance.FinalizeUpgradeInternal();
+        return instance;
+    }
+
+    private static class Upgrade
+    {
+        internal static readonly System.Reflection.MethodInfo Method =
+            RuntimeApi.Bind(typeof(CardModel), nameof(CardModel.UpgradeInternal), false);
+    }
     internal static CardModel ApplyAllocation(CardModel live,Dictionary<string,int>? remaining){
         string id=live.Id.Entry;if(remaining?.GetValueOrDefault(id)>0){Improve(live);remaining[id]--;}return live;
     }

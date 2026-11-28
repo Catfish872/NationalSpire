@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8473AEFD5D4F5E83CBE02B24D545952E09E5C9D00F2E486A00B97EAC2CB3D7A2`。来源：[源码](../../CommunityFilters.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`64F339854ACC364BD0A07A17DB0B30F5EE9816FE5885E8A28281F4A96FC4A4E2`。来源：[源码](../../CommunityFilters.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -15,21 +15,42 @@ private static readonly string[] PostCategories = ["比赛战报","国际赛事"
 private HashSet<string> _checkedCategories = [];
 ```
 
+<a id="symbol-5ee31c47fe51"></a>
+
+## `NationalSpire.CareerScreen.CommunityUnreadOnly — private bool CommunityUnreadOnly`
+
+来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.Variant.AsBool()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._openUnreadUpdates`；`NationalSpire.CareerScreen.ChatPreferenceKey`；`NationalSpire.CareerScreen.ChatPreferences`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "post-unread-only", false)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(ChatPreferenceKey, "post-unread-only", false).AsBool`
+- `Godot.Variant.AsBool()`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "post-unread-only", false).AsBool()`；返回值紧邻使用处：`BinaryExpressionSyntax: _openUnreadUpdates || ChatPreferences.GetValue(ChatPreferenceKey, "post-unread-only", false).AsBool()`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-19e3d9d8326a"></a>
 
 ## `NationalSpire.CareerScreen.BuildCommunityToolbar(NationalSpire.CareerData) — private VBoxContainer BuildCommunityToolbar(CareerData data)`
 
-来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)
 
-**调用：** [`NationalSpire.CareerScreen.ButtonIcon(Godot.Button, string, int, bool)`](DashboardControls.cs.md#symbol-34af00babbac)；[`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`](DashboardControls.cs.md#symbol-0374e90f1c3f)；[`NationalSpire.CareerScreen.DashboardSwitch(string, bool, System.Action<bool>, int, int)`](DashboardControls.cs.md#symbol-f6780ccb3f84)；[`NationalSpire.CareerScreen.EnsureChatPreferencesLoaded()`](ChatHistoryScreen.cs.md#symbol-36884b55f7cb)；[`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`](DashboardControls.cs.md#symbol-d6b849a02619)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenLifePage(string)`](CareerDashboard.cs.md#symbol-0d80fbb19407)；[`NationalSpire.CareerScreen.PopulateCommunityFeed(NationalSpire.CareerData, Godot.VBoxContainer)`](CommunityFilters.cs.md#symbol-09f2fb6e4563)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)；[`NationalSpire.CareerScreen.WriteChatPreferences()`](ChatHistoryScreen.cs.md#symbol-15e26075b1d4)；[`NationalSpire.CommunityThreads.MarkAllRead(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-d7df547dd0ac)；[`NationalSpire.CommunityThreads.MarkProgramRead(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-7398f6d1a869)；[`NationalSpire.ICareerSession.Refresh()`](CareerSession.cs.md#symbol-bae3aaaf496d)；[`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-e21b0ff1d18b)；[`ShowSelection()`](CommunityFilters.cs.md#symbol-7eee36af9b74)；`Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MenuButton.GetPopup()`；`Godot.MenuButton.MenuButton()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PopupMenu.AddCheckItem(string, int, Godot.Key)`；`Godot.Variant.AsStringArray()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.Intersect<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.CareerScreen.ButtonIcon(Godot.Button, string, int, bool)`](DashboardControls.cs.md#symbol-34af00babbac)；[`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`](DashboardControls.cs.md#symbol-0374e90f1c3f)；[`NationalSpire.CareerScreen.DashboardSwitch(string, bool, System.Action<bool>, int, int)`](DashboardControls.cs.md#symbol-f6780ccb3f84)；[`NationalSpire.CareerScreen.EnsureChatPreferencesLoaded()`](ChatHistoryScreen.cs.md#symbol-36884b55f7cb)；[`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`](DashboardControls.cs.md#symbol-d6b849a02619)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenLifePage(string)`](CareerDashboard.cs.md#symbol-0d80fbb19407)；[`NationalSpire.CareerScreen.PopulateCommunityFeed(NationalSpire.CareerData, Godot.VBoxContainer)`](CommunityFilters.cs.md#symbol-09f2fb6e4563)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)；[`NationalSpire.CareerScreen.WriteChatPreferences()`](ChatHistoryScreen.cs.md#symbol-15e26075b1d4)；[`NationalSpire.CommunityThreads.MarkAllRead(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-d7df547dd0ac)；[`NationalSpire.CommunityThreads.MarkProgramRead(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-7398f6d1a869)；[`NationalSpire.ICareerSession.Refresh()`](CareerSession.cs.md#symbol-bae3aaaf496d)；[`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-e21b0ff1d18b)；[`ShowSelection()`](CommunityFilters.cs.md#symbol-775c147f48b3)；`Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MenuButton.GetPopup()`；`Godot.MenuButton.MenuButton()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PopupMenu.AddCheckItem(string, int, Godot.Key)`；`Godot.Variant.AsStringArray()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.Intersect<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._boundData`；`NationalSpire.CareerScreen._checkedCategories`；`NationalSpire.CareerScreen._communityFilter`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._postLimit`；`NationalSpire.CareerScreen.ButtonIcon(Godot.Button, string, int, bool)`；`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`；`NationalSpire.CareerScreen.ChatPreferenceKey`；`NationalSpire.CareerScreen.ChatPreferences`；`NationalSpire.CareerScreen.ComposePostId`；`NationalSpire.CareerScreen.DashboardSwitch(string, bool, System.Action<bool>, int, int)`；`NationalSpire.CareerScreen.EnsureChatPreferencesLoaded()`；`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpenLifePage(string)`；`NationalSpire.CareerScreen.PopulateCommunityFeed(NationalSpire.CareerData, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.PostCategories`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen.Visit(System.Action)`；`NationalSpire.CareerScreen.WriteChatPreferences()`；`NationalSpire.CommunityThreads.MarkAllRead(NationalSpire.CareerData)`；`NationalSpire.CommunityThreads.MarkProgramRead(NationalSpire.CareerData)`；`NationalSpire.ICareerSession.Refresh()`；`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`；`ShowSelection()`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._boundData`；`NationalSpire.CareerScreen._checkedCategories`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen._openUnreadUpdates`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._postLimit`；`NationalSpire.CareerScreen.ButtonIcon(Godot.Button, string, int, bool)`；`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`；`NationalSpire.CareerScreen.ChatPreferenceKey`；`NationalSpire.CareerScreen.ChatPreferences`；`NationalSpire.CareerScreen.CommunityUnreadOnly`；`NationalSpire.CareerScreen.ComposePostId`；`NationalSpire.CareerScreen.DashboardSwitch(string, bool, System.Action<bool>, int, int)`；`NationalSpire.CareerScreen.EnsureChatPreferencesLoaded()`；`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpenLifePage(string)`；`NationalSpire.CareerScreen.PopulateCommunityFeed(NationalSpire.CareerData, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.PostCategories`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen.Visit(System.Action)`；`NationalSpire.CareerScreen.WriteChatPreferences()`；`NationalSpire.CommunityThreads.MarkAllRead(NationalSpire.CareerData)`；`NationalSpire.CommunityThreads.MarkProgramRead(NationalSpire.CareerData)`；`NationalSpire.ICareerSession.Refresh()`；`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`；`ShowSelection()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey,"post-categories",PostCategories)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(ChatPreferenceKey,"post-categories",PostCategories).AsStringArray`
+- `Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；输入表达式：`ChatPreferences.SetValue(ChatPreferenceKey, "post-unread-only", on)`；返回值紧邻使用处：`ExpressionStatementSyntax: ChatPreferences.SetValue(ChatPreferenceKey, "post-unread-only", on);`
 - `Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；输入表达式：`ChatPreferences.SetValue(ChatPreferenceKey,"post-categories",PostCategories.Where(_checkedCategories.Contains).ToArray())`；返回值紧邻使用处：`ExpressionStatementSyntax: ChatPreferences.SetValue(ChatPreferenceKey,"post-categories",PostCategories.Where(_checkedCategories.Contains).ToArray());`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`actions.AddThemeConstantOverride("separation",12)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddThemeConstantOverride("separation",12);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`feed.AddThemeConstantOverride("separation",18)`；返回值紧邻使用处：`ExpressionStatementSyntax: feed.AddThemeConstantOverride("separation",18);`
@@ -53,7 +74,7 @@ private HashSet<string> _checkedCategories = [];
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(164,42)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(164,42)`
 - `NationalSpire.CareerScreen.ButtonIcon(Godot.Button, string, int, bool)`；输入表达式：`ButtonIcon(filter,"chevron-down",15,trailing:true)`；返回值紧邻使用处：`ExpressionStatementSyntax: ButtonIcon(filter,"chevron-down",15,trailing:true);`
 - `NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`；输入表达式：`ButtonSurface(filter,"15232f","354b58","28434c","658c91",6)`；返回值紧邻使用处：`ExpressionStatementSyntax: ButtonSurface(filter,"15232f","354b58","28434c","658c91",6);`
-- `NationalSpire.CareerScreen.DashboardSwitch(string, bool, System.Action<bool>, int, int)`；输入表达式：`DashboardSwitch("仅看未读", _communityFilter == "未读更新", on => {              _communityFilter = on ? "未读更新" : "全部"; _postLimit = 30; PopulateCommunityFeed(data,feed);          },126,42)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DashboardSwitch("仅看未读", _communityFilter == "未读更新", on => {              _communityFilter = on ? "未读更新" : "全部"; _postLimit = 30; PopulateCommunityFeed(data,feed);          },126,42)`
+- `NationalSpire.CareerScreen.DashboardSwitch(string, bool, System.Action<bool>, int, int)`；输入表达式：`DashboardSwitch("仅看未读", CommunityUnreadOnly, on => {              _openUnreadUpdates = false;             ChatPreferences.SetValue(ChatPreferenceKey, "post-unread-only", on);             WriteChatPreferences();             _postLimit = 30; PopulateCommunityFeed(data,feed);          },126,42)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DashboardSwitch("仅看未读", CommunityUnreadOnly, on => {              _openUnreadUpdates = false;             ChatPreferences.SetValue(ChatPreferenceKey, "post-unread-only", on);             WriteChatPreferences();             _postLimit = 30; PopulateCommunityFeed(data,feed);          },126,42)`
 - `NationalSpire.CareerScreen.EnsureChatPreferencesLoaded()`；输入表达式：`EnsureChatPreferencesLoaded()`；返回值紧邻使用处：`ExpressionStatementSyntax: EnsureChatPreferencesLoaded();`
 - `NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；输入表达式：`FramedAction("查看公告", () => OpenLifePage("公开消息"),"notice-board",width:128)`；返回值紧邻使用处：`ArgumentSyntax: FramedAction("查看公告", () => OpenLifePage("公开消息"),"notice-board",width:128)`
 - `NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；输入表达式：`FramedAction("发表新帖", () => Visit(() => _postId = ComposePostId),"plus",width:128)`；返回值紧邻使用处：`ArgumentSyntax: FramedAction("发表新帖", () => Visit(() => _postId = ComposePostId),"plus",width:128)`
@@ -84,7 +105,7 @@ private HashSet<string> _checkedCategories = [];
 - `_boundData` = `ViewData`
 - `_checkedCategories` = `_checkedCategories.Count == PostCategories.Length ? [] : PostCategories.ToHashSet()`
 - `_checkedCategories` = `ChatPreferences.GetValue(ChatPreferenceKey,"post-categories",PostCategories).AsStringArray()              .Intersect(PostCategories).ToHashSet()`
-- `_communityFilter` = `on ? "未读更新" : "全部"`
+- `_openUnreadUpdates` = `false`
 - `_postId` = `ComposePostId`
 - `_postLimit` = `30`
 - `briefs.TooltipText` = `"将没有玩家发言或 AI 回复的程序简讯标为已读。"`
@@ -101,11 +122,11 @@ private HashSet<string> _checkedCategories = [];
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `TooltipText` = `"筛选社区内容分类"`
 
-<a id="symbol-7eee36af9b74"></a>
+<a id="symbol-775c147f48b3"></a>
 
 ## `ShowSelection() — void ShowSelection()`
 
-来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BuildCommunityToolbar(NationalSpire.CareerData)`](CommunityFilters.cs.md#symbol-19e3d9d8326a)
 
@@ -128,13 +149,13 @@ private HashSet<string> _checkedCategories = [];
 
 ## `NationalSpire.CareerScreen.PopulateCommunityFeed(NationalSpire.CareerData, Godot.VBoxContainer) — private void PopulateCommunityFeed(CareerData data,VBoxContainer feed)`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BuildCommunityToolbar(NationalSpire.CareerData)`](CommunityFilters.cs.md#symbol-19e3d9d8326a)；[`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)；[`NationalSpire.CareerScreen.PopulateCommunityFeed(NationalSpire.CareerData, Godot.VBoxContainer)`](CommunityFilters.cs.md#symbol-09f2fb6e4563)
 
 **调用：** [`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.Container)`](CareerScreen.cs.md#symbol-ce65b4128fee)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.PopulateCommunityFeed(NationalSpire.CareerData, Godot.VBoxContainer)`](CommunityFilters.cs.md#symbol-09f2fb6e4563)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `Matches(NationalSpire.CommunityPost)`；`Mine(NationalSpire.CommunityPost)`；`NationalSpire.CareerData.Posts`；`NationalSpire.CareerData.SavedThreads`；`NationalSpire.CareerScreen._checkedCategories`；`NationalSpire.CareerScreen._communityFilter`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._postLimit`；`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.Container)`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.PopulateCommunityFeed(NationalSpire.CareerData, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.PostCategories`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`
+**字段、属性、事件及方法组引用：** `Matches(NationalSpire.CommunityPost)`；`Mine(NationalSpire.CommunityPost)`；`NationalSpire.CareerData.Posts`；`NationalSpire.CareerData.SavedThreads`；`NationalSpire.CareerScreen._checkedCategories`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._postLimit`；`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.Container)`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.CommunityUnreadOnly`；`NationalSpire.CareerScreen.PopulateCommunityFeed(NationalSpire.CareerData, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.PostCategories`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -160,13 +181,13 @@ private HashSet<string> _checkedCategories = [];
 
 - `_postLimit` += `30`
 
-<a id="symbol-3084ecfdf106"></a>
+<a id="symbol-70536c48c5e1"></a>
 
 ## `IsMe(string) — bool IsMe(string id)`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Mine(NationalSpire.CommunityPost)`](CommunityFilters.cs.md#symbol-a1fb9d8c455e)
+**调用者：** [`Mine(NationalSpire.CommunityPost)`](CommunityFilters.cs.md#symbol-63cd21828e52)
 
 **调用：** 无已绑定显式调用。
 
@@ -178,15 +199,15 @@ private HashSet<string> _checkedCategories = [];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-a1fb9d8c455e"></a>
+<a id="symbol-63cd21828e52"></a>
 
 ## `Mine(NationalSpire.CommunityPost) — bool Mine(CommunityPost p)`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Matches(NationalSpire.CommunityPost)`](CommunityFilters.cs.md#symbol-ef3806a56489)
+**调用者：** [`Matches(NationalSpire.CommunityPost)`](CommunityFilters.cs.md#symbol-1884e4ac0f3d)
 
-**调用：** [`IsMe(string)`](CommunityFilters.cs.md#symbol-3084ecfdf106)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+**调用：** [`IsMe(string)`](CommunityFilters.cs.md#symbol-70536c48c5e1)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `IsMe(string)`；`NationalSpire.CommunityPost.AuthorId`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityReply.AuthorId`
 
@@ -199,15 +220,15 @@ private HashSet<string> _checkedCategories = [];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-ef3806a56489"></a>
+<a id="symbol-1884e4ac0f3d"></a>
 
 ## `Matches(NationalSpire.CommunityPost) — bool Matches(CommunityPost post)`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Mine(NationalSpire.CommunityPost)`](CommunityFilters.cs.md#symbol-a1fb9d8c455e)；`string.Contains(string)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.HashSet<T>.Contains(T)`
+**调用：** [`Mine(NationalSpire.CommunityPost)`](CommunityFilters.cs.md#symbol-63cd21828e52)；`string.Contains(string)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.HashSet<T>.Contains(T)`
 
 **字段、属性、事件及方法组引用：** `Mine(NationalSpire.CommunityPost)`；`NationalSpire.CareerScreen._checkedCategories`；`NationalSpire.CommunityPost.Category`；`NationalSpire.CommunityPost.EventKey`；`NationalSpire.CommunityPost.Revision`；`NationalSpire.CommunityPost.SeenRevision`
 

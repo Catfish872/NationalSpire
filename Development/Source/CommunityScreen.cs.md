@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`C304A9829AEE26FE063788C086A83855E9A9EBB92E0ECA0C8EDEAFB6D83B39F3`。来源：[源码](../../CommunityScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`324A25C76220DEA05CEC9360C836A7815CC22439CF936D1AE718685E95670CA8`。来源：[源码](../../CommunityScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -148,15 +148,15 @@ private double _elapsed;
 
 **调用：** [`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._communityFilter`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen.Visit(System.Action)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._openUnreadUpdates`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen.Visit(System.Action)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerScreen.Visit(System.Action)`；输入表达式：`Visit(() => { _tab = "社区"; _postId = null; _communityFilter = "未读更新"; })`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Visit(() => { _tab = "社区"; _postId = null; _communityFilter = "未读更新"; })`
+- `NationalSpire.CareerScreen.Visit(System.Action)`；输入表达式：`Visit(() => { _tab = "社区"; _postId = null; _openUnreadUpdates = true; })`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Visit(() => { _tab = "社区"; _postId = null; _openUnreadUpdates = true; })`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_communityFilter` = `"未读更新"`
+- `_openUnreadUpdates` = `true`
 - `_postId` = `null`
 - `_tab` = `"社区"`
 

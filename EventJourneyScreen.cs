@@ -71,14 +71,21 @@ public partial class CareerScreen
                 dates.AddChild(Text("原定行程 · " + GameCalendar.Text(data, data.Journey.Destination), 16, _muted));
                 var enter = new EventStoryButton { Name = "EnterJourneyEvent", Caption = "在这里停留片刻", Detail = "进入今日际遇，完成后可以继续原定行程", Mark = "?", CustomMinimumSize = new(0, 100) };
                 enter.Pressed += () => { _cancelDialog?.Invoke(); OpenRandomEvent(encounter.Id); }; box.AddChild(enter);
+            }, showCancel: false, footer: (actions, _, stay) =>
+            {
+                stay.CustomMinimumSize = new(136, 48);
+                stay.AddThemeStyleboxOverride("normal", CareerVisuals.Box("1b3040", "365465", 8, 12));
                 var skip = Button("跳过这次际遇，继续前往  →", () =>
                 {
                     _cancelDialog?.Invoke();
                     if (MultiplayerCommand("event-skip", encounter.Id, accepted: ContinueEventJourney)) return;
                     RandomEvents.Skip(ViewData, encounter.Id); CareerStore.Save(ViewData); ContinueEventJourney();
                 }, 0);
-                skip.Name = "SkipJourneyEvent"; box.AddChild(skip);
-            }, showCancel: false);
+                skip.Name = "SkipJourneyEvent";
+                skip.CustomMinimumSize = new(230, 48);
+                skip.AddThemeStyleboxOverride("normal", CareerVisuals.Box("294750", "577f83", 8, 12));
+                actions.AddChild(skip);
+            });
         }).CallDeferred();
     }
 }

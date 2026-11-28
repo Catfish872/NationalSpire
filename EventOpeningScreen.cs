@@ -81,7 +81,11 @@ public partial class CareerScreen
                 mode = value; note.Visible = mode != 2; picker.Visible = mode == 2;
                 note.Text = mode == 0 ? "让故事决定今天会遇见谁，也可能是独自度过的一天。" : "这次只写玩家自己的经历。";
                 if (mode == 2 && picker.GetChildCount() == 0)
-                    PeoplePicker(picker, PrivateMessages.ChatCandidates(data).ToArray(), chosen, false, Update, 224);
+                {
+                    var previousEvent = data.Life.RandomEvents.Where(e => e.State == "complete" && e.Day <= data.Day).MaxBy(e => e.Day);
+                    PeoplePicker(picker, PrivateMessages.ChatCandidates(data).ToArray(), chosen, false, Update, 224,
+                        lastEventPeople: previousEvent?.People.ToHashSet(StringComparer.Ordinal) ?? []);
+                }
                 Update();
             }
             EventModeTabs(box, ["随机","玩家独自经历","指定人物"], mode, ShowMode);

@@ -18,7 +18,7 @@ public static class GameCardKnowledge
                     + " · 费用" + (card.EnergyCost.CostsX ? "X" : card.EnergyCost.GetWithModifiers(CostModifiers.All).ToString())
                     + "：" + GameText.Plain(card.GetDescriptionForPile(PileType.None));
                 string description = Describe();
-                if (card.MaxUpgradeLevel > 0) { card.UpgradeInternal(); card.FinalizeUpgradeInternal(); description += "\n" + Describe(); }
+                if (card.MaxUpgradeLevel > 0) { LeagueCards.Improve(card); description += "\n" + Describe(); }
                 reference = new(model.Id.ToString(), name, description);
             }
             catch (Exception error) { Diagnostics.Error("card-reference:" + model.Id, error); }

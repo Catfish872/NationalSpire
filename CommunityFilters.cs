@@ -5,6 +5,7 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     private static readonly string[] PostCategories = ["比赛战报","国际赛事","俱乐部动态","人物日常","我的讨论","其他动态"];
+    private bool CommunityUnreadOnly => _openUnreadUpdates || ChatPreferences.GetValue(ChatPreferenceKey, "post-unread-only", false).AsBool();
     private HashSet<string> _checkedCategories = [];
 
     private VBoxContainer BuildCommunityToolbar(CareerData data)
@@ -35,8 +36,11 @@ public partial class CareerScreen
         actions.AddChild(read);
         actions.AddChild(FramedAction("查看公告", () => OpenLifePage("公开消息"),"notice-board",width:128));
         actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore });
-        var unread = DashboardSwitch("仅看未读", _communityFilter == "未读更新", on => {
-            _communityFilter = on ? "未读更新" : "全部"; _postLimit = 30; PopulateCommunityFeed(data,feed);
+        var unread = DashboardSwitch("仅看未读", CommunityUnreadOnly, on => {
+            _openUnreadUpdates = false;
+            ChatPreferences.SetValue(ChatPreferenceKey, "post-unread-only", on);
+            WriteChatPreferences();
+            _postLimit = 30; PopulateCommunityFeed(data,feed);
         },126,42);
         actions.AddChild(unread);
         var filter = new MenuButton { Name = "CommunityCategories", CustomMinimumSize = new(164,42), Flat = false,
@@ -73,7 +77,7 @@ public partial class CareerScreen
     private void PopulateCommunityFeed(CareerData data,VBoxContainer feed)
     {
         CareerVisuals.ClearContent(feed);
-        bool all = _checkedCategories.Count == PostCategories.Length, unread = _communityFilter == "未读更新";
+        bool all = _checkedCategories.Count == PostCategories.Length, unread = CommunityUnreadOnly;
         string localPlayer = GroupChats.Human(data);
         bool IsMe(string id) => id == "player" || id == localPlayer;
         bool Mine(CommunityPost p) => IsMe(p.AuthorId) || p.Replies.Any(r => IsMe(r.AuthorId));

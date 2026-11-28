@@ -10,7 +10,7 @@ namespace NationalSpire;
 internal sealed class LeagueSolverLink : IDisposable
 {
     internal const string Unavailable="当前游戏版本不支持镜面对决";
-    // 内置版本使用 113 的战场、箭槽及逐击资料。探测游戏自身，不检查玩家安装的其他模组。
+    // 对战需要原生箭槽和本局模型。集卡页面独立于推演组件。
     internal static readonly bool Supported=typeof(Player).Assembly.GetType("MegaCrit.Sts2.Core.Entities.FoolArrows.ArrowSlot")!=null
         && typeof(MegaCrit.Sts2.Core.Runs.RunState).GetProperty("RunModels")!=null;
     // 游戏与联赛共用角色类型；求解器和它的辅助库只在这个上下文内解析。
@@ -36,7 +36,13 @@ internal sealed class LeagueSolverLink : IDisposable
         _reportRuns?.Invoke(actions) ?? actions.Select((_,i)=>(i,1,1)).ToArray();
     private static Func<IEnumerable<CardModel>,int>? _menu;
     internal static int Menu(IEnumerable<CardModel> cards)=>_menu?.Invoke(cards)??0;
-    internal static int[] SelectActual(CardModel[] cards,int pile,string purpose,int effect,int min,int max)=>_actual?.Invoke(cards,pile,purpose,effect,min,max)??Enumerable.Range(0,Math.Min(min,cards.Length)).ToArray();
+    internal static int[] SelectActual(CardModel[] cards,int pile,string purpose,int effect,int min,int max){
+        if(_actual!=null){
+            try{return _actual(cards,pile,purpose,effect,min,max);}
+            catch(Exception e) when(e is not OperationCanceledException){Diagnostics.Error("league-solver-choice",e.GetBaseException());}
+        }
+        return Enumerable.Range(0,Math.Min(min,cards.Length)).ToArray();
+    }
     private readonly Func<bool>? _endTurn;
     internal bool EndTurn=>!_failed&&_endTurn?.Invoke()==true;
     private readonly Func<(CardModel,int,int[])[]>? _rest;
@@ -47,7 +53,9 @@ internal sealed class LeagueSolverLink : IDisposable
     private LeagueSolverLink(object session){_session=(IDisposable)session;_choices=session.GetType().GetProperty("LastChoices")!.GetMethod!.CreateDelegate<Func<int[]>>(session);_aim=session.GetType().GetProperty("LastAim")!.GetMethod!.CreateDelegate<Func<int>>(session);_endTurn=session.GetType().GetProperty("EndTurn")!.GetMethod!.CreateDelegate<Func<bool>>(session);_rest=session.GetType().GetMethod("Continuation")!.CreateDelegate<Func<(CardModel,int,int[])[]>>(session);_choose=session.GetType().GetMethod("Choose")!.CreateDelegate<Func<decimal[],int[],bool[],int[],Task<CardModel?>>>(session);}
     private static readonly Lazy<Task<Type?>> Ready=new(()=>Task.Run(()=>{
         try{using var stream=typeof(LeagueSolverLink).Assembly.GetManifestResourceStream("NationalSpire.LeagueSolver.dll")!;
-            var type=new EngineContext().LoadFromStream(stream).GetType("NationalSpire.Solver.LeagueForecast",true)!;
+            var context=new EngineContext();
+            using var binding=context.EnterContextualReflection();
+            var type=context.LoadFromStream(stream).GetType("NationalSpire.Solver.LeagueForecast",true)!;
             type.GetMethod("Prepare")!.Invoke(null,null);
             _actual=type.GetMethod("SelectActual")!.CreateDelegate<Func<CardModel[],int,string,int,int,int,int[]>>();
             _reportRuns=type.GetMethod("ReportRuns")!.CreateDelegate<Func<int[],(int,int,int)[]>>();

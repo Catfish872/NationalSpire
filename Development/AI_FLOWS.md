@@ -138,7 +138,7 @@ RunEvidence.ForPrompt 读取已结算的 DuelReport。Describe 给出所有回�
 
 ChallengeNote 是 AiContext、WeeklyJournal、CommunityThreads 与比赛报告共用的挑战说明。普通和快速沿用原文字并使用比赛记录进阶。恐惧采用用户指定的玩家主动开启恐惧模式文字，说明固定进阶10、难度极高和对手仍按赛事进阶参赛；多人称呼继续使用玩家队伍与对手队伍。
 
-ReadDefeatedEncounters 读取全部已完成精英和首领，DreadFacts 将本幕实际效果提供者与遭遇编号对应。RunEvidence.ForPrompt 只在提供者的 Name 后增加恐惧模式难度提高附注，内容按普通战斗、精英战斗、首领战依次说明实际强化。双首领时，提供者附注同时说明本幕两位首领的自身强化。材料通过原比赛上下文进入既有请求，系统消息、默认提示词、模板和消息结构沿用原实现。
+ReadDefeatedEncounters 读取全部已完成精英和首领，DreadFacts 将本幕实际效果提供者与遭遇编号对应。RunEvidence.ForPrompt 只在提供者的 Name 后增加恐惧模式难度提高附注，内容先列出固定的单人支配说明，再列出首领战强化。双首领时，提供者附注同时说明本幕两位首领的自身强化。材料通过原比赛上下文进入既有请求，系统消息、默认提示词、模板和消息结构沿用原实现。
 
 ## 经济和国家发展的公开事实
 

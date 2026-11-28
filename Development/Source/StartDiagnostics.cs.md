@@ -188,7 +188,7 @@ private bool _finished;
 
 来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Begin()`](GameBridge.cs.md#symbol-906d064eb34a)；[`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
+**调用者：** [`Begin()`](GameBridge.cs.md#symbol-59b73a224875)；[`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
 
 **调用：** [`NationalSpire.StartDiagnostics.Write(string, object?)`](StartDiagnostics.cs.md#symbol-7005259dbbc6)
 
@@ -250,7 +250,7 @@ private bool _finished;
 
 来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Begin()`](GameBridge.cs.md#symbol-906d064eb34a)；[`NationalSpire.StartDiagnostics.CaptureMethod(System.Reflection.MethodBase, string, System.Exception?)`](StartDiagnostics.cs.md#symbol-c59bb8ad3a48)；[`NationalSpire.StartDiagnostics.Observe(System.Reflection.MethodBase, System.Threading.Tasks.Task)`](StartDiagnostics.cs.md#symbol-926d639dd30b)；[`NationalSpire.StartDiagnostics.Used(System.Reflection.MethodBase?)`](StartDiagnostics.cs.md#symbol-f70ffc60dab9)
+**调用者：** [`Begin()`](GameBridge.cs.md#symbol-59b73a224875)；[`NationalSpire.StartDiagnostics.CaptureMethod(System.Reflection.MethodBase, string, System.Exception?)`](StartDiagnostics.cs.md#symbol-c59bb8ad3a48)；[`NationalSpire.StartDiagnostics.Observe(System.Reflection.MethodBase, System.Threading.Tasks.Task)`](StartDiagnostics.cs.md#symbol-926d639dd30b)；[`NationalSpire.StartDiagnostics.Used(System.Reflection.MethodBase?)`](StartDiagnostics.cs.md#symbol-f70ffc60dab9)
 
 **调用：** [`NationalSpire.StartDiagnostics.Write(string, object?)`](StartDiagnostics.cs.md#symbol-7005259dbbc6)；`HarmonyLib.Harmony.GetPatchInfo(System.Reflection.MethodBase)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Exception.ToString()`；`System.Reflection.MemberInfo.GetCustomAttribute<T>()`；`System.Type.GetMethod(string, System.Reflection.BindingFlags)`
 

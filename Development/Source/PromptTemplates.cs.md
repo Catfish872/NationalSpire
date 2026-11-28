@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1C9B8965BB84D9A738AC9E2589D233CA20681F4EB6A98FF6091048FF9B370118`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`22D77F924CA77259C45AA26CC1A84DC3627CAF853DB785A3C6A0FCF76D379818`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -22,10 +22,10 @@ private const string FoolKnowledge = """
 愚者：
 初始：77血，初始遗物歌曲之弓，每场战斗开始时获得6点瞄准。初始只有1支箭矢。
 核心机制：箭矢、瞄准、旋律、拉伸，以及悲伤与喜悦。射中敌人后，箭矢使其进入扎穿状态。再命中该敌人3次或击败敌人，箭矢就会松脱并返回。瞄准增加下一支箭矢的伤害，随后消耗。
-瞄准流：依靠炫技积累瞄准，再用沉重射击获得双倍瞄准加成。主流选手追求一箭击杀，认为一箭没有打死就是瞄准叠得还不够。
+瞄准流：依靠炫技积累瞄准，再用沉重射击获得多倍瞄准加成。主流选手追求一箭击杀，认为一箭没有打死就是瞄准叠得还不够。
 旋律流：哇牌偏攻击，啾牌偏格挡，叽牌偏抽牌、蓄能与重复出牌。打出对应卡牌后，旋律持续到本回合结束。先有啾或叽旋律，哇 爆破能攻击全体两次；先有哇或叽旋律，啾 四肢能从2费降为0费。曲中意靠获得不同旋律抽牌，啾 副歌能打出手中所有哇、叽牌。当地选手嫌混合旋律难记，常只围绕一种旋律选牌，更愿意积累拉伸，再用啾 叽恢复获得格挡时消耗的拉伸。
-悲伤流：说笑获得格挡时生成悲伤。悲伤是无法打出的保留状态牌。喜悦之拳在攻击后转化一张悲伤，每层狂喜在回合开始时转化一张。转化所得的喜悦只需0费，打出后获得1点能量并抽1张牌。
-常见评价：愚者就像名字一样，只有笨蛋才会选。说笑等卡牌会把悲伤加入手牌，当地人因此认为选了愚者只会手牌充满悲伤。箭射出去后，进攻空窗期极强，为了取回一支箭还得继续攻击，被认为是亏本设计。生长虽然能消耗悲伤换取拉伸，但又要专门寻找配合，被认为是先把自己卡住，再想办法补救。
+悲伤流：说笑获得格挡时生成悲伤。悲伤是无法打出的保留状态牌。喜悦之拳在攻击后转化悲伤，每层狂喜在回合开始时转化一张。转化所得的喜悦只需0费，打出后获得1点能量并抽1张牌。
+常见评价：愚者就像名字一样，只有笨蛋才会选。说笑等卡牌会把悲伤加入手牌，当地人因此认为选了愚者只会手牌充满悲伤。箭射出去后，进攻空窗期极强，为了取回一支箭还得继续攻击，被认为是亏本设计。
 """;
 ```
 
@@ -190,7 +190,7 @@ private const string FoolKnowledge = """
 
 **调用者：** [`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-3f64d002bbbe)；[`NationalSpire.PromptLibrary.Save(NationalSpire.AiOptions, string, string)`](PromptLibrary.cs.md#symbol-101a181e9f40)；[`NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?)`](PromptTransfer.cs.md#symbol-3403e8b82dd8)；[`NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](PromptTransfer.cs.md#symbol-0bce76771cbe)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)
 
-**调用：** [`BuiltIn(string)`](PromptTemplates.cs.md#symbol-f5fa50ab908c)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`
+**调用：** [`BuiltIn(string)`](PromptTemplates.cs.md#symbol-d9ed6a4e928c)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `(string Parent, System.Lazy<System.Collections.Generic.Dictionary<string, string>> Text).Parent`；`(string Parent, System.Lazy<System.Collections.Generic.Dictionary<string, string>> Text).Text`；`BuiltIn(string)`；`NationalSpire.AiOptions.CustomPromptTemplates`；`NationalSpire.CustomPromptTemplate.BaseTemplate`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.PromptLibrary.EditableText(string, string)`；`NationalSpire.PromptLibrary.LegacySections`；`NationalSpire.PromptLibrary.Presets`；`NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；`NationalSpire.PromptSection.DefaultText`；`NationalSpire.PromptSection.Id`
 
@@ -214,7 +214,7 @@ private const string FoolKnowledge = """
 - `template` = `custom.BaseTemplate`
 - `template` = `preset.Parent`
 
-<a id="symbol-f5fa50ab908c"></a>
+<a id="symbol-d9ed6a4e928c"></a>
 
 ## `BuiltIn(string) — string BuiltIn(string text)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`E463B3A21DF4AF4BA5F0B9E7232EA15AA919299CC1974AD9759D25B3126653F2`。来源：[源码](../../AvatarImages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`7701A60A275690F392C18B732B6A05F4CEDBB2381C8B4E8CB7806F5068CF400B`。来源：[源码](../../AvatarImages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -121,11 +121,35 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 - `Size` = `new(192, 192)`
 - `TransparentBg` = `true`
 
+<a id="symbol-a24fac77bc73"></a>
+
+## `NationalSpire.AvatarImages.CopyOpeningIcon(Godot.Texture2D?) — internal static ImageTexture? CopyOpeningIcon(Texture2D? texture)`
+
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.FormalGate(NationalSpire.CareerData, NationalSpire.CareerMatch, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-72880a76b76f)
+
+**调用：** [`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`](AvatarAssets.cs.md#symbol-1d4beb6f533e)；`Godot.Image.IsEmpty()`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`Godot.Texture2D.GetImage()`；`string.GetFile()`；`string.StartsWith(string, System.StringComparison)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Image.IsEmpty()`；输入表达式：`image.IsEmpty()`；返回值紧邻使用处：`BinaryExpressionSyntax: image == null || image.IsEmpty()`
+- `Godot.ImageTexture.CreateFromImage(Godot.Image)`；输入表达式：`ImageTexture.CreateFromImage(image)`；返回值紧邻使用处：`ConditionalExpressionSyntax: image == null || image.IsEmpty() ? null : ImageTexture.CreateFromImage(image)`
+- `Godot.Texture2D.GetImage()`；输入表达式：`texture.GetImage()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = texture.GetImage()`
+- `NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`；输入表达式：`AvatarAssets.Usable(texture)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !AvatarAssets.Usable(texture)`
+- `string.GetFile()`；输入表达式：`texture.ResourcePath.GetFile()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: texture.ResourcePath.GetFile().StartsWith`
+- `string.StartsWith(string, System.StringComparison)`；输入表达式：`texture.ResourcePath.GetFile().StartsWith("character_icon_", StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !texture.ResourcePath.GetFile().StartsWith("character_icon_", StringComparison.OrdinalIgnoreCase)`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-b10dde67e8a0"></a>
 
 ## `NationalSpire.AvatarImages.TextureImage(Godot.Texture2D) — private static Image TextureImage(Texture2D texture)`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`](AvatarImages.cs.md#symbol-11dcaf1a0f5d)；[`NationalSpire.AvatarImages.TextureImage(Godot.Texture2D)`](AvatarImages.cs.md#symbol-b10dde67e8a0)
 
@@ -157,7 +181,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 ## `NationalSpire.AvatarImages.FromImage(Godot.Image, string, string) — public static PlayerAvatar FromImage(Image image, string source, string label)`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`](AvatarImages.cs.md#symbol-11dcaf1a0f5d)；[`NationalSpire.AvatarImages.FromCardPng(byte[])`](AvatarImages.cs.md#symbol-1bd15f735eef)；[`NationalSpire.AvatarImages.FromCharacterCardArt(Godot.Node, NationalSpire.AvatarArt)`](AvatarImages.cs.md#symbol-f46bb00e33dc)；[`NationalSpire.AvatarImages.FromFile(string)`](AvatarImages.cs.md#symbol-2455dc6874f9)；[`NationalSpire.AvatarSources.Steam()`](AvatarSources.cs.md#symbol-bc266fec0f45)
 
@@ -201,7 +225,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 ## `NationalSpire.AvatarImages.Read(NationalSpire.PlayerAvatar?) — public static AvatarArt? Read(PlayerAvatar? avatar)`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Face()`](OpeningPlayerEditor.cs.md#symbol-bfa0e310c4c5)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.LeagueNativeMatch.ShowTeamIntent(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Nodes.Combat.NCreature)`](LeagueNativeMatch.cs.md#symbol-50df0eb4b7be)；[`Select(NationalSpire.PlayerAvatar)`](AvatarScreen.cs.md#symbol-223ba7b715b1)
 

@@ -24,7 +24,7 @@ public partial class CareerScreen : Control, IScreenContext
     private string _profileOrigin = "全部来源";
     private int _profileLimit = 36;
     private string _profileQuery = "";
-    private string _communityFilter = "全部";
+    private bool _openUnreadUpdates;
     private int _postLimit = 30;
     private ScrollContainer _scroll = null!;
     protected Control _stage = null!;
@@ -34,6 +34,8 @@ public partial class CareerScreen : Control, IScreenContext
     private int _noticedCeremonySeason;
     private string? _personId, _postId;
     private int _renderVersion;
+    private void RenderKeepingScroll()
+    { int y = _scroll.ScrollVertical; Render(); _ = RestoreScrollAsync(y, _renderVersion); }
     private async Task RestoreScrollAsync(int position, int version)
     {
         // 容器需要完成两轮布局，过早设置会被尚未更新的滚动范围归零。
@@ -364,11 +366,10 @@ public partial class CareerScreen : Control, IScreenContext
         var agendaItems=Upcoming(data).ToList();
         // 本周日程也列出自动结算的计划。主栏只选有对应玩家操作的事项。
         var next=agendaItems.FirstOrDefault(item => item.Match != null || item.Visit != null);
-        var due = new HFlowContainer {Name="HomeToday"}; due.AddThemeConstantOverride("h_separation",12);
-        var eventColumn=new VBoxContainer {CustomMinimumSize=new(490,0),SizeFlagsHorizontal=SizeFlags.ExpandFill};
-        EventCards(data,eventColumn,data.Day);
-        if(eventColumn.GetChildCount()>0) due.AddChild(eventColumn); else eventColumn.Free();
-        if(SeasonCeremony.ShowInvitation(data)) CeremonyInvitation(data,due);
+        if (SeasonCeremony.ShowInvitation(data)) CeremonyInvitation(data, _content);
+        var due = new VBoxContainer { Name = "HomeToday" };
+        due.AddThemeConstantOverride("separation", _content.GetThemeConstant("separation"));
+        EventCards(data, due, data.Day);
         bool hasClubInvitation=HomeClubInvitation(data,due);
         if(due.GetChildCount()>0) _content.AddChild(due); else due.Free();
         string person=string.IsNullOrEmpty(next?.Person) ? "player" : next.Person;
@@ -832,14 +833,22 @@ public partial class CareerScreen : Control, IScreenContext
             var selection = Card(); selection.Name = "MatchCharacterSelection";
             selection.AddThemeStyleboxOverride("panel", CareerVisuals.Box("102b39", "47788a", 10, 20)); box.AddChild(selection);
             var choices = Inner(selection); var heading = new HBoxContainer(); choices.AddChild(heading); heading.AddChild(Text("出战角色", 25, _gold));
-            const int columns = 5, slots = 2 * columns;
-            bool hasOverflow = chars.Count > slots;
-            int directCount = hasOverflow ? slots - 1 : chars.Count;
+            const int columns = 5, rowGap = 12;
             int selectedCharacter = data.RandomCharacter ? chars.Count : Math.Max(0, chars.FindIndex(c => c.Id.ToString() == data.SelectedCharacter));
             var characterGrid = new GridContainer { Name = "MatchCharacterGrid", Columns = columns, SizeFlagsHorizontal = SizeFlags.ExpandFill };
-            characterGrid.AddThemeConstantOverride("h_separation", 12); characterGrid.AddThemeConstantOverride("v_separation", 12); choices.AddChild(characterGrid);
+            characterGrid.AddThemeConstantOverride("h_separation", 12); characterGrid.AddThemeConstantOverride("v_separation", rowGap);
+            ScrollContainer? roleScroll = null;
+            if (chars.Count > 2 * columns)
+            {
+                roleScroll = new ScrollContainer {
+                    Name = "MatchCharacterScroll", CustomMinimumSize = new(0, 2 * CharacterTileHeight + rowGap),
+                    HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, FollowFocus = true
+                };
+                choices.AddChild(roleScroll);
+                roleScroll.AddChild(characterGrid);
+            }
+            else choices.AddChild(characterGrid);
             var characterButtons = new Dictionary<int, Button>();
-            OptionButton? overflow = null;
             var selectedLabel = DashboardLabel("", 18, CareerVisuals.Teal);
             selectedLabel.ClipText = true;
             selectedLabel.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
@@ -849,13 +858,6 @@ public partial class CareerScreen : Control, IScreenContext
                 foreach (var (option, button) in characterButtons)
                     button.SetPressedNoSignal(option == index);
                 bool random = index == chars.Count;
-                if (overflow != null)
-                {
-                    int item = !random && index >= directCount ? overflow.GetItemIndex(index) : -1;
-                    overflow.Select(item);
-                    if (item < 0) overflow.Text = "更多角色";
-                    overflow.TooltipText = overflow.Text;
-                }
                 if (chars.Count == 0) { selectedLabel.Text = "没有可用角色。"; return; }
                 string chosen = random ? "随机角色" : PlayerArchive.CharacterName(chars[index].Id);
                 selectedLabel.Text = random ? "随机角色 · 开赛时确定" : "已选择：" + chosen;
@@ -878,7 +880,7 @@ public partial class CareerScreen : Control, IScreenContext
                 if (!random) data.SelectedCharacter = id;
                 CareerStore.Save(data);
             }
-            for (int i = 0; i < directCount; i++)
+            for (int i = 0; i < chars.Count; i++)
             {
                 int index = i;
                 string title = PlayerArchive.CharacterName(chars[i].Id);
@@ -893,7 +895,7 @@ public partial class CareerScreen : Control, IScreenContext
                 inner.OffsetLeft = CharacterTileInset; inner.OffsetRight = -CharacterTileInset; inner.OffsetTop = 5; inner.OffsetBottom = -5;
                 inner.AddThemeConstantOverride("separation", CharacterCaptionGap);
                 inner.AddChild(new CareerAvatar { Art = AvatarAssets.Load(chars[i].Id.ToString(), 0, false),
-                    CustomMinimumSize = new(CareerAvatarIcon.Pixels, CareerAvatarIcon.Pixels),
+                    CustomMinimumSize = new(CharacterPortraitSize, CharacterPortraitSize),
                     SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore });
                 var name = DashboardLabel(title, 22, _ink);
                 name.SizeFlagsVertical = SizeFlags.ShrinkCenter;
@@ -902,11 +904,8 @@ public partial class CareerScreen : Control, IScreenContext
                 inner.AddChild(name);
                 characterButtons.Add(index, choice); characterGrid.AddChild(choice);
             }
-            if (hasOverflow)
-            {
-                overflow = ArenaCharacterMenu(chars, directCount, selectedCharacter, ChooseCharacter);
-                characterGrid.AddChild(overflow);
-            }
+            if (roleScroll != null && characterButtons.TryGetValue(selectedCharacter, out var selectedTile))
+                roleScroll.CallDeferred(ScrollContainer.MethodName.EnsureControlVisible, selectedTile);
             var randomCharacter = ArenaIconButton("随机角色","shuffle",() => { if (chars.Count > 0) ChooseCharacter(chars.Count); },choice:true);
             randomCharacter.Name = "MatchRandomCharacter"; randomCharacter.Disabled = chars.Count == 0;
             randomCharacter.TooltipText = "开赛时从当前可用角色中随机确定，包含已启用的模组角色；继续比赛沿用存档角色。";

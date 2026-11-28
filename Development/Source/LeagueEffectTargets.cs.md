@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8E8FECFBF3FD49D506E8ECC9B762417A08CF8C5554156C10C872AA5602D52F2C`。来源：[源码](../../LeagueEffectTargets.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`943FFA03375245763DBB0697836FC321A80D8652B0BC7CDF59C4E07DF3AC8323`。来源：[源码](../../LeagueEffectTargets.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -13,6 +13,8 @@
 ```csharp
 private static readonly HashSet<MethodBase> EffectPatches=[];
 private static readonly HashSet<Type> SeenPowers=[];
+private static readonly HashSet<Type> SeenTargetCards=[];
+private static readonly Dictionary<Type,MethodInfo[]> TargetMethods=[];
 private static Harmony _leagueHarmony=null!;
 [ThreadStatic] private static bool _passApplication;
 ```
@@ -21,11 +23,11 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.InstallEffectTargets(HarmonyLib.Harmony) — private static void InstallEffectTargets(Harmony h)`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Install()`](LeagueNativeMatch.cs.md#symbol-8277ecd62500)
 
-**调用：** [`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-e923419816d3)；`HarmonyLib.AccessTools.AsyncMoveNext(System.Reflection.MethodBase)`；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.EnumeratorMoveNext(System.Reflection.MethodBase)`；`HarmonyLib.AccessTools.GetDeclaredMethods(System.Type)`；`HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`
+**调用：** [`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-4bb2eee3d331)；`HarmonyLib.AccessTools.AsyncMoveNext(System.Reflection.MethodBase)`；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.EnumeratorMoveNext(System.Reflection.MethodBase)`；`HarmonyLib.AccessTools.GetDeclaredMethods(System.Type)`；`HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Reflection.MemberInfo.GetCustomAttribute<T>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.LeagueNativeMatch._leagueHarmony`；`Register(string, string)`
 
@@ -36,11 +38,16 @@ private static Harmony _leagueHarmony=null!;
 - `HarmonyLib.AccessTools.AsyncMoveNext(System.Reflection.MethodBase)`；输入表达式：`AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(OstyCmd),"Summon"))`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(OstyCmd),"Summon"))`
 - `HarmonyLib.AccessTools.AsyncMoveNext(System.Reflection.MethodBase)`；输入表达式：`AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(SleightOfFleshPower),"AfterPowerAmountChanged"))`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(SleightOfFleshPower),"AfterPowerAmountChanged"))`
 - `HarmonyLib.AccessTools.AsyncMoveNext(System.Reflection.MethodBase)`；输入表达式：`AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(StranglePower),"AfterCardPlayed"))`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(StranglePower),"AfterCardPlayed"))`
+- `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(body,"MoveNext")`；返回值紧邻使用处：`ConditionalExpressionSyntax: body==null?applied:AccessTools.DeclaredMethod(body,"MoveNext")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(mark,"AfterSideTurnEnd")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(mark,"AfterSideTurnEnd")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(mark,"BeforeCardPlayed")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(mark,"BeforeCardPlayed")`
+- `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(power,nameof(PowerModel.AfterApplied))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =AccessTools.DeclaredMethod(power,nameof(PowerModel.AfterApplied))`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(thorns,"BeforeDamageReceived")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(thorns,"BeforeDamageReceived")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(CardCmd),"AutoPlay")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(CardCmd),"AutoPlay")`
+- `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(CardModel),nameof(CardModel.OnPlayWrapper))`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(CardModel),nameof(CardModel.OnPlayWrapper))`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(CombatState),"IterateHookListeners")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(CombatState),"IterateHookListeners")`
+- `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(InterceptPower),"RefreshCoveringNames")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(InterceptPower),"RefreshCoveringNames")`
+- `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(MultiplayerScalingModel),nameof(MultiplayerScalingModel.ModifyBlockMultiplicative))`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(MultiplayerScalingModel),nameof(MultiplayerScalingModel.ModifyBlockMultiplicative))`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(OstyCmd),"Summon")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(OstyCmd),"Summon")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(PowerModel),"ApplyInternal")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(PowerModel),"ApplyInternal")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(SleightOfFleshPower),"AfterPowerAmountChanged")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(SleightOfFleshPower),"AfterPowerAmountChanged")`
@@ -58,23 +65,30 @@ private static Harmony _leagueHarmony=null!;
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(mark,"AfterSideTurnEnd"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(EndCardMark)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(mark,"AfterSideTurnEnd"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(EndCardMark)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(mark,"BeforeCardPlayed"),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(LeagueOwner)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(mark,"BeforeCardPlayed"),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(LeagueOwner)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(typeof(CardCmd),"AutoPlay"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareAutoPlay)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(typeof(CardCmd),"AutoPlay"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareAutoPlay)));`
+- `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(typeof(CardModel),nameof(CardModel.OnPlayWrapper)),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareCardTargets)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(typeof(CardModel),nameof(CardModel.OnPlayWrapper)),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareCardTargets)));`
+- `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(typeof(InterceptPower),"RefreshCoveringNames"),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterNames)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(typeof(InterceptPower),"RefreshCoveringNames"),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterNames)));`
+- `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(typeof(MultiplayerScalingModel),nameof(MultiplayerScalingModel.ModifyBlockMultiplicative)),             postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelBlockScaling)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(typeof(MultiplayerScalingModel),nameof(MultiplayerScalingModel.ModifyBlockMultiplicative)),             postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelBlockScaling)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(typeof(PowerModel),"ApplyInternal"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PreparePowerOwner)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(typeof(PowerModel),"ApplyInternal"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PreparePowerOwner)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.GetDeclaredMethods(typeof(PowerCmd)).Single(m=>m.Name=="Apply"&&!m.IsGenericMethod),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingPower)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.GetDeclaredMethods(typeof(PowerCmd)).Single(m=>m.Name=="Apply"&&!m.IsGenericMethod),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingPower)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.Method(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"ModifyPowerAmountReceived"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelDoom)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.Method(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"ModifyPowerAmountReceived"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelDoom)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.Method(typeof(PowerCmd),"ModifyAmount"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingStack)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.Method(typeof(PowerCmd),"ModifyAmount"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingStack)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.IsSecondaryEnemy)),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelPet)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.IsSecondaryEnemy)),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelPet)));`
+- `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(body==null?applied:AccessTools.DeclaredMethod(body,"MoveNext"),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterNames)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(body==null?applied:AccessTools.DeclaredMethod(body,"MoveNext"),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterNames)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(listeners,transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterListeners)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(listeners,transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterListeners)));`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(AutoPlayTeams))`；返回值紧邻使用处：`ArgumentSyntax: transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(AutoPlayTeams))`
+- `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelBlockScaling))`；返回值紧邻使用处：`ArgumentSyntax: postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelBlockScaling))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelDoom))`；返回值紧邻使用处：`ArgumentSyntax: postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelDoom))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelPet))`；返回值紧邻使用处：`ArgumentSyntax: postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelPet))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(EndCardMark))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(EndCardMark))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterListeners))`；返回值紧邻使用处：`ArgumentSyntax: transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterListeners))`
+- `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterNames))`；返回值紧邻使用处：`ArgumentSyntax: transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterNames))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FindExistingOsty))`；返回值紧邻使用处：`ArgumentSyntax: transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FindExistingOsty))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FleshOpponent))`；返回值紧邻使用处：`ArgumentSyntax: transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FleshOpponent))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(LeagueOwner))`；返回值紧邻使用处：`ArgumentSyntax: transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(LeagueOwner))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingPower))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingPower))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingStack))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingStack))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareAutoPlay))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareAutoPlay))`
+- `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareCardTargets))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareCardTargets))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PreparePowerOwner))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PreparePowerOwner))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(StrangleDamage))`；返回值紧邻使用处：`ArgumentSyntax: transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(StrangleDamage))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ThornDamage))`；返回值紧邻使用处：`ArgumentSyntax: transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ThornDamage))`
@@ -84,16 +98,17 @@ private static Harmony _leagueHarmony=null!;
 - `Register(string, string)`；输入表达式：`Register("Powers","PoisonPower")`；返回值紧邻使用处：`ExpressionStatementSyntax: Register("Powers","PoisonPower");`
 - `Register(string, string)`；输入表达式：`Register("Relics","CharonsAshes FestivePopper ForgottenSoul Kusarigama LetterOpener LostWisp Metronome MercuryHourglass MrStruggles ParryingShield ScreamingFlagon StoneCalendar Tingsha")`；返回值紧邻使用处：`ExpressionStatementSyntax: Register("Relics","CharonsAshes FestivePopper ForgottenSoul Kusarigama LetterOpener LostWisp Metronome MercuryHourglass MrStruggles ParryingShield ScreamingFlagon StoneCalendar Tingsha");`
 - `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`AccessTools.GetDeclaredMethods(typeof(PowerCmd)).Single(m=>m.Name=="Apply"&&!m.IsGenericMethod)`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.GetDeclaredMethods(typeof(PowerCmd)).Single(m=>m.Name=="Apply"&&!m.IsGenericMethod)`
+- `System.Reflection.MemberInfo.GetCustomAttribute<T>()`；输入表达式：`applied.GetCustomAttribute<System.Runtime.CompilerServices.AsyncStateMachineAttribute>()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: applied.GetCustomAttribute<System.Runtime.CompilerServices.AsyncStateMachineAttribute>()?.StateMachineType`
 
 **赋值（含属性/字段和局部值）：**
 
 - `_leagueHarmony` = `h`
 
-<a id="symbol-e923419816d3"></a>
+<a id="symbol-4bb2eee3d331"></a>
 
 ## `Register(string, string) — void Register(string group,string names)`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.InstallEffectTargets(HarmonyLib.Harmony)`](LeagueEffectTargets.cs.md#symbol-e5c8dd52e1ac)
 
@@ -127,7 +142,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.DuelPet(MegaCrit.Sts2.Core.Entities.Creatures.Creature, ref bool) — private static void DuelPet(Creature __instance,ref bool __result)`
 
-来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -147,7 +162,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.FighterListeners(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase) — private static IEnumerable<CodeInstruction> FighterListeners(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod)`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -174,7 +189,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.FighterForHooks(MegaCrit.Sts2.Core.Entities.Creatures.Creature, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.AbstractModel>) — private static Player? FighterForHooks(Creature c,List<AbstractModel> models)`
 
-来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -194,7 +209,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.FindExistingOsty(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase) — private static IEnumerable<CodeInstruction> FindExistingOsty(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -221,7 +236,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.SummonerTeam(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player) — private static IReadOnlyList<Creature> SummonerTeam(ICombatState state,Player p)`
 
-来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -237,11 +252,254 @@ private static Harmony _leagueHarmony=null!;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-20e93e6e84c7"></a>
+
+## `NationalSpire.LeagueNativeMatch.FighterNames(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>) — private static IEnumerable<CodeInstruction> FighterNames(IEnumerable<CodeInstruction> instructions)`
+
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；`HarmonyLib.CodeInstruction.Calls(System.Reflection.MethodInfo)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.Method(typeof(LeagueNativeMatch),nameof(FighterDisplayName))`；返回值紧邻使用处：`AssignmentExpressionSyntax: code[i+2].operand=AccessTools.Method(typeof(LeagueNativeMatch),nameof(FighterDisplayName))`
+- `HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.Method(typeof(PlatformUtil),nameof(PlatformUtil.GetPlayerName))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =AccessTools.Method(typeof(PlatformUtil),nameof(PlatformUtil.GetPlayerName))`
+- `HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；输入表达式：`AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player))`
+- `HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；输入表达式：`AccessTools.PropertyGetter(typeof(Player),nameof(Player.NetId))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =AccessTools.PropertyGetter(typeof(Player),nameof(Player.NetId))`
+- `HarmonyLib.CodeInstruction.Calls(System.Reflection.MethodInfo)`；输入表达式：`code[i].Calls(player)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !code[i].Calls(player)`
+- `HarmonyLib.CodeInstruction.Calls(System.Reflection.MethodInfo)`；输入表达式：`code[i+1].Calls(id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !code[i+1].Calls(id)`
+- `HarmonyLib.CodeInstruction.Calls(System.Reflection.MethodInfo)`；输入表达式：`code[i+2].Calls(name)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !code[i+2].Calls(name)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`instructions.ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =instructions.ToArray()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `code[i].opcode` = `code[i+1].opcode=OpCodes.Nop`
+- `code[i].operand` = `code[i+1].operand=null`
+- `code[i+1].opcode` = `OpCodes.Nop`
+- `code[i+1].operand` = `null`
+- `code[i+2].operand` = `AccessTools.Method(typeof(LeagueNativeMatch),nameof(FighterDisplayName))`
+
+<a id="symbol-bcf1bbec184b"></a>
+
+## `NationalSpire.LeagueNativeMatch.FighterDisplayName(MegaCrit.Sts2.Core.Platform.PlatformType, MegaCrit.Sts2.Core.Entities.Creatures.Creature) — private static string FighterDisplayName(PlatformType platform,Creature fighter)`
+
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`](ArchitectFinal.cs.md#symbol-943fdb98d018)；`MegaCrit.Sts2.Core.Platform.PlatformUtil.GetPlayerName(MegaCrit.Sts2.Core.Platform.PlatformType, ulong)`；`string.EscapeBbcodeTags()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.OpponentName`；`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `MegaCrit.Sts2.Core.Platform.PlatformUtil.GetPlayerName(MegaCrit.Sts2.Core.Platform.PlatformType, ulong)`；输入表达式：`PlatformUtil.GetPlayerName(platform,fighter.Player!.NetId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: For(fighter) is {} duel         ?duel.OpponentName.EscapeBbcodeTags():PlatformUtil.GetPlayerName(platform,fighter.Player!.NetId)`
+- `NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`；输入表达式：`For(fighter)`；返回值紧邻使用处：`IsPatternExpressionSyntax: For(fighter) is {} duel`
+- `string.EscapeBbcodeTags()`；输入表达式：`duel.OpponentName.EscapeBbcodeTags()`；返回值紧邻使用处：`ConditionalExpressionSyntax: For(fighter) is {} duel         ?duel.OpponentName.EscapeBbcodeTags():PlatformUtil.GetPlayerName(platform,fighter.Player!.NetId)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-197d5e8af68f"></a>
+
+## `NationalSpire.LeagueNativeMatch.DuelBlockScaling(MegaCrit.Sts2.Core.Entities.Creatures.Creature?, ref decimal) — private static void DuelBlockScaling(Creature? target,ref decimal __result)`
+
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`](ArchitectFinal.cs.md#symbol-943fdb98d018)；[`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Players.Player?)`](ArchitectFinal.cs.md#symbol-dfa68774ae32)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueNativeMatch._room`；`NationalSpire.LeagueNativeMatch.Current`；`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`；`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Players.Player?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`；输入表达式：`For(target)`；返回值紧邻使用处：`BinaryExpressionSyntax: For(target)!=null`
+- `NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Players.Player?)`；输入表达式：`For(target.PetOwner)`；返回值紧邻使用处：`BinaryExpressionSyntax: For(target.PetOwner)!=null`
+
+**赋值（含属性/字段和局部值）：**
+
+- `__result` = `1m`
+
+<a id="symbol-399efc9e3bb5"></a>
+
+## `NationalSpire.LeagueNativeMatch.GeneratesCard(System.Reflection.MethodInfo) — private static bool GeneratesCard(MethodInfo call)`
+
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LeagueNativeMatch.AllyTargetPlayer(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>)`](LeagueEffectTargets.cs.md#symbol-d47ac0f90bb1)；[`NationalSpire.LeagueNativeMatch.CardTargetMethods(MegaCrit.Sts2.Core.Models.CardModel)`](LeagueEffectTargets.cs.md#symbol-9801f9c85a04)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-478bcbcccd99"></a>
+
+## `NationalSpire.LeagueNativeMatch.PrepareCardTargets(MegaCrit.Sts2.Core.Models.CardModel) — private static void PrepareCardTargets(CardModel __instance)`
+
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.LeagueNativeMatch.CardTargetMethods(MegaCrit.Sts2.Core.Models.CardModel)`](LeagueEffectTargets.cs.md#symbol-9801f9c85a04)；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`object.GetType()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueNativeMatch._leagueHarmony`；`NationalSpire.LeagueNativeMatch.CardTargetMethods(MegaCrit.Sts2.Core.Models.CardModel)`；`NationalSpire.LeagueNativeMatch.Current`；`NationalSpire.LeagueNativeMatch.SeenTargetCards`；`NationalSpire.LeagueNativeMatch.TargetMethods`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`_leagueHarmony.Patch(method,transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(AllyTargetPlayer)))`；返回值紧邻使用处：`ExpressionStatementSyntax: _leagueHarmony.Patch(method,transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(AllyTargetPlayer)));`
+- `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(AllyTargetPlayer))`；返回值紧邻使用处：`ArgumentSyntax: transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(AllyTargetPlayer))`
+- `NationalSpire.LeagueNativeMatch.CardTargetMethods(MegaCrit.Sts2.Core.Models.CardModel)`；输入表达式：`CardTargetMethods(__instance)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CardTargetMethods(__instance).ToArray`
+- `object.GetType()`；输入表达式：`__instance.GetType()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =__instance.GetType()`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`TargetMethods.TryGetValue(cardType,out var methods)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !TargetMethods.TryGetValue(cardType,out var methods)`
+- `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`SeenTargetCards.Add(cardType)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !SeenTargetCards.Add(cardType)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`CardTargetMethods(__instance).ToArray()`；返回值紧邻使用处：`AssignmentExpressionSyntax: methods=CardTargetMethods(__instance).ToArray()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `methods` = `CardTargetMethods(__instance).ToArray()`
+- `TargetMethods[cardType]` = `methods=CardTargetMethods(__instance).ToArray()`
+
+<a id="symbol-9801f9c85a04"></a>
+
+## `NationalSpire.LeagueNativeMatch.CardTargetMethods(MegaCrit.Sts2.Core.Models.CardModel) — private static IEnumerable<MethodInfo> CardTargetMethods(CardModel card)`
+
+来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LeagueNativeMatch.PrepareCardTargets(MegaCrit.Sts2.Core.Models.CardModel)`](LeagueEffectTargets.cs.md#symbol-478bcbcccd99)
+
+**调用：** [`NationalSpire.LeagueNativeMatch.GeneratesCard(System.Reflection.MethodInfo)`](LeagueEffectTargets.cs.md#symbol-399efc9e3bb5)；[`NationalSpire.LeagueNativeMatch.Nested(System.Type)`](LeagueEffectTargets.cs.md#symbol-f360a5e17097)；`HarmonyLib.AccessTools.GetDeclaredMethods(System.Type)`；`HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；`HarmonyLib.PatchProcessor.ReadMethodBody(System.Reflection.MethodBase)`；`object.Equals(object?, object?)`；`object.GetType()`；`System.Collections.Generic.IEnumerable<TFirst>.Zip<TFirst, TSecond>(System.Collections.Generic.IEnumerable<TSecond>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Reflection.MethodBase.GetMethodBody()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueNativeMatch.GeneratesCard(System.Reflection.MethodInfo)`；`NationalSpire.LeagueNativeMatch.Nested(System.Type)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `HarmonyLib.AccessTools.GetDeclaredMethods(System.Type)`；输入表达式：`AccessTools.GetDeclaredMethods(type)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach(var method in AccessTools.GetDeclaredMethods(type)){             if(method.GetMethodBody()==null)continue;             var body=PatchProcessor.ReadMethodBody(method).ToArray();             if(body.Any(i=>i.Value is MethodInfo call && GeneratesCard(call)) ||                 (card.TargetType==TargetType.AnyAlly && body.Zip(body.Skip(1)).Any(p=>Equals(p.First.Value,target)&&Equals(p.Second.Value,player))))                 yield return method;         }`
+- `HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；输入表达式：`AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player))`
+- `HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；输入表达式：`AccessTools.PropertyGetter(typeof(MegaCrit.Sts2.Core.Entities.Cards.CardPlay),"Target")`；返回值紧邻使用处：`EqualsValueClauseSyntax: =AccessTools.PropertyGetter(typeof(MegaCrit.Sts2.Core.Entities.Cards.CardPlay),"Target")`
+- `HarmonyLib.PatchProcessor.ReadMethodBody(System.Reflection.MethodBase)`；输入表达式：`PatchProcessor.ReadMethodBody(method)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PatchProcessor.ReadMethodBody(method).ToArray`
+- `NationalSpire.LeagueNativeMatch.GeneratesCard(System.Reflection.MethodInfo)`；输入表达式：`GeneratesCard(call)`；返回值紧邻使用处：`BinaryExpressionSyntax: i.Value is MethodInfo call && GeneratesCard(call)`
+- `NationalSpire.LeagueNativeMatch.Nested(System.Type)`；输入表达式：`Nested(card.GetType())`；返回值紧邻使用处：`ForEachStatementSyntax: foreach(var type in Nested(card.GetType()))foreach(var method in AccessTools.GetDeclaredMethods(type)){             if(method.GetMethodBody()==null)continue;             var body=PatchProcessor.ReadMethodBody(method).ToArray();             if(body.Any(i=>i.Value is MethodInfo call && GeneratesCard(call)) ||                 (card.TargetType==TargetType.AnyAlly && body.Zip(body.Skip(1)).Any(p=>Equals(p.First.Value,target)&&Equals(p.Second.Value,player))))                 yield return method;         }`
+- `object.Equals(object?, object?)`；输入表达式：`Equals(p.First.Value,target)`；返回值紧邻使用处：`BinaryExpressionSyntax: Equals(p.First.Value,target)&&Equals(p.Second.Value,player)`
+- `object.Equals(object?, object?)`；输入表达式：`Equals(p.Second.Value,player)`；返回值紧邻使用处：`BinaryExpressionSyntax: Equals(p.First.Value,target)&&Equals(p.Second.Value,player)`
+- `object.GetType()`；输入表达式：`card.GetType()`；返回值紧邻使用处：`ArgumentSyntax: card.GetType()`
+- `System.Collections.Generic.IEnumerable<TFirst>.Zip<TFirst, TSecond>(System.Collections.Generic.IEnumerable<TSecond>)`；输入表达式：`body.Zip(body.Skip(1))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: body.Zip(body.Skip(1)).Any`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`body.Any(i=>i.Value is MethodInfo call && GeneratesCard(call))`；返回值紧邻使用处：`BinaryExpressionSyntax: body.Any(i=>i.Value is MethodInfo call && GeneratesCard(call)) ||                 (card.TargetType==TargetType.AnyAlly && body.Zip(body.Skip(1)).Any(p=>Equals(p.First.Value,target)&&Equals(p.Second.Value,player)))`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`body.Zip(body.Skip(1)).Any(p=>Equals(p.First.Value,target)&&Equals(p.Second.Value,player))`；返回值紧邻使用处：`BinaryExpressionSyntax: card.TargetType==TargetType.AnyAlly && body.Zip(body.Skip(1)).Any(p=>Equals(p.First.Value,target)&&Equals(p.Second.Value,player))`
+- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`body.Skip(1)`；返回值紧邻使用处：`ArgumentSyntax: body.Skip(1)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`PatchProcessor.ReadMethodBody(method).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =PatchProcessor.ReadMethodBody(method).ToArray()`
+- `System.Reflection.MethodBase.GetMethodBody()`；输入表达式：`method.GetMethodBody()`；返回值紧邻使用处：`BinaryExpressionSyntax: method.GetMethodBody()==null`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-d47ac0f90bb1"></a>
+
+## `NationalSpire.LeagueNativeMatch.AllyTargetPlayer(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>) — private static IEnumerable<CodeInstruction> AllyTargetPlayer(IEnumerable<CodeInstruction> instructions)`
+
+来源：源码第 145 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.LeagueNativeMatch.GeneratesCard(System.Reflection.MethodInfo)`](LeagueEffectTargets.cs.md#symbol-399efc9e3bb5)；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；`HarmonyLib.CodeInstruction.Calls(System.Reflection.MethodInfo)`；`System.Reflection.MethodBase.GetParameters()`；`System.Reflection.MethodInfo.GetGenericArguments()`；`System.Reflection.MethodInfo.MakeGenericMethod(params System.Type[])`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueNativeMatch.GeneratesCard(System.Reflection.MethodInfo)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(LeagueNativeMatch),name)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: AccessTools.DeclaredMethod(typeof(LeagueNativeMatch),name).MakeGenericMethod`
+- `HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.Method(typeof(LeagueNativeMatch),nameof(LeaguePlayer))`；返回值紧邻使用处：`AssignmentExpressionSyntax: instruction.operand=AccessTools.Method(typeof(LeagueNativeMatch),nameof(LeaguePlayer))`
+- `HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；输入表达式：`AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player))`
+- `HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；输入表达式：`AccessTools.PropertyGetter(typeof(MegaCrit.Sts2.Core.Entities.Cards.CardPlay),"Target")`；返回值紧邻使用处：`EqualsValueClauseSyntax: =AccessTools.PropertyGetter(typeof(MegaCrit.Sts2.Core.Entities.Cards.CardPlay),"Target")`
+- `HarmonyLib.CodeInstruction.Calls(System.Reflection.MethodInfo)`；输入表达式：`instruction.Calls(player)`；返回值紧邻使用处：`BinaryExpressionSyntax: afterTarget&&instruction.Calls(player)`
+- `HarmonyLib.CodeInstruction.Calls(System.Reflection.MethodInfo)`；输入表达式：`instruction.Calls(target)`；返回值紧邻使用处：`AssignmentExpressionSyntax: afterTarget=instruction.Calls(target)`
+- `NationalSpire.LeagueNativeMatch.GeneratesCard(System.Reflection.MethodInfo)`；输入表达式：`GeneratesCard(call)`；返回值紧邻使用处：`BinaryExpressionSyntax: instruction.operand is MethodInfo call && GeneratesCard(call)`
+- `System.Reflection.MethodBase.GetParameters()`；输入表达式：`call.GetParameters()`；返回值紧邻使用处：`ElementAccessExpressionSyntax: call.GetParameters()[0]`
+- `System.Reflection.MethodInfo.GetGenericArguments()`；输入表达式：`call.GetGenericArguments()`；返回值紧邻使用处：`ArgumentSyntax: call.GetGenericArguments()`
+- `System.Reflection.MethodInfo.MakeGenericMethod(params System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(LeagueNativeMatch),name).MakeGenericMethod(call.GetGenericArguments())`；返回值紧邻使用处：`AssignmentExpressionSyntax: instruction.operand=AccessTools.DeclaredMethod(typeof(LeagueNativeMatch),name).MakeGenericMethod(call.GetGenericArguments())`
+
+**赋值（含属性/字段和局部值）：**
+
+- `afterTarget` = `instruction.Calls(target)`
+- `instruction.opcode` = `OpCodes.Call`
+- `instruction.operand` = `AccessTools.DeclaredMethod(typeof(LeagueNativeMatch),name).MakeGenericMethod(call.GetGenericArguments())`
+- `instruction.operand` = `AccessTools.Method(typeof(LeagueNativeMatch),nameof(LeaguePlayer))`
+
+<a id="symbol-42ebe31dc5f7"></a>
+
+## `NationalSpire.LeagueNativeMatch.GenerateForTargets<T>(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition) — private static async Task GenerateForTargets<T>(IEnumerable<Creature> targets,PileType pileType,int count,Player? creator,CardPilePosition position) where T:CardModel`
+
+来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.LeagueNativeMatch.GenerateForTarget<T>(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition)`](LeagueEffectTargets.cs.md#symbol-07799f66fb88)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueNativeMatch.GenerateForTarget<T>(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.LeagueNativeMatch.GenerateForTarget<T>(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition)`；输入表达式：`GenerateForTarget<T>(target,pileType,count,creator,position)`；返回值紧邻使用处：`AwaitExpressionSyntax: await GenerateForTarget<T>(target,pileType,count,creator,position)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-07799f66fb88"></a>
+
+## `NationalSpire.LeagueNativeMatch.GenerateForTarget<T>(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition) — private static Task GenerateForTarget<T>(Creature target,PileType pileType,int count,Player? creator,CardPilePosition position) where T:CardModel`
+
+来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LeagueNativeMatch.GenerateForTargets<T>(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition)`](LeagueEffectTargets.cs.md#symbol-42ebe31dc5f7)
+
+**调用：** [`AddToRival()`](LeagueEffectTargets.cs.md#symbol-03fbd21e77f1)；[`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`](ArchitectFinal.cs.md#symbol-943fdb98d018)；`MegaCrit.Sts2.Core.Commands.CardPileCmd.AddToCombatAndPreview<T>(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition)`
+
+**字段、属性、事件及方法组引用：** `AddToRival()`；`NationalSpire.LeagueNativeMatch.Current`；`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `AddToRival()`；输入表达式：`AddToRival()`；返回值紧邻使用处：`ReturnStatementSyntax: return AddToRival();`
+- `MegaCrit.Sts2.Core.Commands.CardPileCmd.AddToCombatAndPreview<T>(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition)`；输入表达式：`CardPileCmd.AddToCombatAndPreview<T>(target,pileType,count,creator,position)`；返回值紧邻使用处：`ReturnStatementSyntax: return CardPileCmd.AddToCombatAndPreview<T>(target,pileType,count,creator,position);`
+- `NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`；输入表达式：`For(target)`；返回值紧邻使用处：`IsPatternExpressionSyntax: For(target) is {} fighter`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-03fbd21e77f1"></a>
+
+## `AddToRival() — async Task AddToRival()`
+
+来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LeagueNativeMatch.GenerateForTarget<T>(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition)`](LeagueEffectTargets.cs.md#symbol-07799f66fb88)
+
+**调用：** `MegaCrit.Sts2.Core.Combat.ICombatState.CreateCard<T>(MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Commands.CardPileCmd.AddGeneratedCardToCombat(MegaCrit.Sts2.Core.Models.CardModel, MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Rival`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `MegaCrit.Sts2.Core.Combat.ICombatState.CreateCard<T>(MegaCrit.Sts2.Core.Entities.Players.Player)`；输入表达式：`state.CreateCard<T>(fighter.Rival)`；返回值紧邻使用处：`ArgumentSyntax: state.CreateCard<T>(fighter.Rival)`
+- `MegaCrit.Sts2.Core.Commands.CardPileCmd.AddGeneratedCardToCombat(MegaCrit.Sts2.Core.Models.CardModel, MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Players.Player?, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition)`；输入表达式：`CardPileCmd.AddGeneratedCardToCombat(state.CreateCard<T>(fighter.Rival),pileType,creator,position)`；返回值紧邻使用处：`AwaitExpressionSyntax: await CardPileCmd.AddGeneratedCardToCombat(state.CreateCard<T>(fighter.Rival),pileType,creator,position)`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-a0a1c444bf34"></a>
 
 ## `NationalSpire.LeagueNativeMatch.PreparePowerOwner(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature) — private static void PreparePowerOwner(PowerModel __instance,Creature owner)`
 
-来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -276,7 +534,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.IsOwnerPair(object?, object?) — private static bool IsOwnerPair(object? first,object? second)`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.PowerOwnerPair(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>)`](LeagueEffectTargets.cs.md#symbol-8003911790c8)；[`NationalSpire.LeagueNativeMatch.PreparePowerOwner(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature)`](LeagueEffectTargets.cs.md#symbol-a0a1c444bf34)
 
@@ -294,7 +552,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.PowerOwnerPair(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>) — private static IEnumerable<CodeInstruction> PowerOwnerPair(IEnumerable<CodeInstruction> instructions)`
 
-来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 192 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -317,9 +575,9 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.Nested(System.Type) — private static IEnumerable<Type> Nested(Type t)`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueNativeMatch.Install()`](LeagueNativeMatch.cs.md#symbol-8277ecd62500)；[`NationalSpire.LeagueNativeMatch.Nested(System.Type)`](LeagueEffectTargets.cs.md#symbol-f360a5e17097)；[`NationalSpire.LeagueNativeMatch.PreparePowerOwner(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature)`](LeagueEffectTargets.cs.md#symbol-a0a1c444bf34)；[`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-e923419816d3)
+**调用者：** [`NationalSpire.LeagueNativeMatch.CardTargetMethods(MegaCrit.Sts2.Core.Models.CardModel)`](LeagueEffectTargets.cs.md#symbol-9801f9c85a04)；[`NationalSpire.LeagueNativeMatch.Install()`](LeagueNativeMatch.cs.md#symbol-8277ecd62500)；[`NationalSpire.LeagueNativeMatch.Nested(System.Type)`](LeagueEffectTargets.cs.md#symbol-f360a5e17097)；[`NationalSpire.LeagueNativeMatch.PreparePowerOwner(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature)`](LeagueEffectTargets.cs.md#symbol-a0a1c444bf34)；[`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-4bb2eee3d331)
 
 **调用：** [`NationalSpire.LeagueNativeMatch.Nested(System.Type)`](LeagueEffectTargets.cs.md#symbol-f360a5e17097)；`System.Type.GetNestedTypes(System.Reflection.BindingFlags)`
 
@@ -337,7 +595,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.FleshOpponent(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase) — private static IEnumerable<CodeInstruction> FleshOpponent(IEnumerable<CodeInstruction> code,MethodBase __originalMethod)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -365,7 +623,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.FleshTarget(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Models.Powers.SleightOfFleshPower) — private static bool FleshTarget(Creature target,SleightOfFleshPower power)`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 208 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -383,7 +641,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.EndCardMark(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Combat.CombatSide, ref System.Threading.Tasks.Task) — private static bool EndCardMark(PowerModel __instance,CombatSide side,ref Task __result)`
 
-来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -403,7 +661,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.StrangleDamage(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase) — private static IEnumerable<CodeInstruction> StrangleDamage(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod)`
 
-来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -430,7 +688,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.StrangleHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Models.Powers.StranglePower) — private static Task<IEnumerable<DamageResult>> StrangleHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext ctx,Creature target,decimal amount,MegaCrit.Sts2.Core.ValueProps.ValueProp props,CardModel? source,MegaCrit.Sts2.Core.Entities.Cards.CardPlay? play,StranglePower mark)`
 
-来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -450,7 +708,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.AutoPlayTeams(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase) — private static IEnumerable<CodeInstruction> AutoPlayTeams(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod)`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 230 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -477,7 +735,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.PrepareAutoPlay(MegaCrit.Sts2.Core.Models.CardModel, ref MegaCrit.Sts2.Core.Entities.Creatures.Creature?, ref bool) — private static void PrepareAutoPlay(CardModel card,ref Creature? target,ref bool skipCardPileVisuals)`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 240 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -501,7 +759,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.AutoAllies(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Models.CardModel) — private static IReadOnlyList<Creature> AutoAllies(ICombatState state,CardModel card)`
 
-来源：源码第 156 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 247 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -521,9 +779,9 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.FindOwner(System.Type, System.Type, out System.Collections.Generic.List<System.Reflection.FieldInfo>) — private static bool FindOwner(Type from,Type model,out List<FieldInfo> path)`
 
-来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 248 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueNativeMatch.FindOwner(System.Type, System.Type, out System.Collections.Generic.List<System.Reflection.FieldInfo>)`](LeagueEffectTargets.cs.md#symbol-d9333bab0888)；[`NationalSpire.LeagueNativeMatch.ResolveEffectSides(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase)`](LeagueEffectTargets.cs.md#symbol-09d3958e73f5)；[`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-e923419816d3)
+**调用者：** [`NationalSpire.LeagueNativeMatch.FindOwner(System.Type, System.Type, out System.Collections.Generic.List<System.Reflection.FieldInfo>)`](LeagueEffectTargets.cs.md#symbol-d9333bab0888)；[`NationalSpire.LeagueNativeMatch.ResolveEffectSides(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase)`](LeagueEffectTargets.cs.md#symbol-09d3958e73f5)；[`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-4bb2eee3d331)
 
 **调用：** [`NationalSpire.LeagueNativeMatch.FindOwner(System.Type, System.Type, out System.Collections.Generic.List<System.Reflection.FieldInfo>)`](LeagueEffectTargets.cs.md#symbol-d9333bab0888)；`HarmonyLib.AccessTools.GetDeclaredFields(System.Type)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -544,9 +802,9 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.SideGetter(System.Reflection.MethodInfo, System.Type) — private static bool SideGetter(MethodInfo m,Type model)`
 
-来源：源码第 164 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueNativeMatch.ResolveEffectSides(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase)`](LeagueEffectTargets.cs.md#symbol-09d3958e73f5)；[`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-e923419816d3)
+**调用者：** [`NationalSpire.LeagueNativeMatch.ResolveEffectSides(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase)`](LeagueEffectTargets.cs.md#symbol-09d3958e73f5)；[`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-4bb2eee3d331)
 
 **调用：** 无已绑定显式调用。
 
@@ -562,9 +820,9 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.CardArgument(System.Reflection.MethodBase) — private static int CardArgument(MethodBase m)`
 
-来源：源码第 165 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 256 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueNativeMatch.ResolveEffectSides(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase)`](LeagueEffectTargets.cs.md#symbol-09d3958e73f5)；[`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-e923419816d3)
+**调用者：** [`NationalSpire.LeagueNativeMatch.ResolveEffectSides(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase)`](LeagueEffectTargets.cs.md#symbol-09d3958e73f5)；[`Register(string, string)`](LeagueEffectTargets.cs.md#symbol-4bb2eee3d331)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Reflection.MethodBase.GetParameters()`
 
@@ -582,7 +840,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.ResolveEffectSides(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>, System.Reflection.MethodBase) — private static IEnumerable<CodeInstruction> ResolveEffectSides(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod)`
 
-来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 257 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -616,7 +874,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.QueueDoom(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?) — private static bool QueueDoom(PowerModel power,Creature target,decimal amount,Creature? applier,CardModel? source)`
 
-来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.PendingPower(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, ref System.Threading.Tasks.Task)`](LeagueEffectTargets.cs.md#symbol-fba84bd095e8)；[`NationalSpire.LeagueNativeMatch.PendingStack(MegaCrit.Sts2.Core.Models.PowerModel, decimal, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, ref System.Threading.Tasks.Task<int>)`](LeagueEffectTargets.cs.md#symbol-172cad5ff820)
 
@@ -640,7 +898,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.PendingPower(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, ref System.Threading.Tasks.Task) — private static bool PendingPower(PowerModel power,Creature target,decimal amount,Creature? applier,CardModel? cardSource,ref Task __result)`
 
-来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 281 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -660,7 +918,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.PendingStack(MegaCrit.Sts2.Core.Models.PowerModel, decimal, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, ref System.Threading.Tasks.Task<int>) — private static bool PendingStack(PowerModel power,decimal offset,Creature? applier,CardModel? cardSource,ref Task<int> __result)`
 
-来源：源码第 193 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 284 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -681,7 +939,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.DuelDoom(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, ref decimal) — private static void DuelDoom(ICombatState combatState,PowerModel canonicalPower,Creature target,Creature? giver,ref decimal __result)`
 
-来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 287 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -701,7 +959,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.AddedDoom(int) — internal static int AddedDoom(int layers)`
 
-来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 291 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.DuelDoom(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, ref decimal)`](LeagueEffectTargets.cs.md#symbol-fc0ab243f3ba)
 
@@ -720,7 +978,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.PoisonHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?) — private static Task<IEnumerable<DamageResult>> PoisonHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext ctx,Creature target,decimal amount,MegaCrit.Sts2.Core.ValueProps.ValueProp props,CardModel? source,MegaCrit.Sts2.Core.Entities.Cards.CardPlay? play)`
 
-来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -743,7 +1001,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.OrbHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature) — private static Task<IEnumerable<DamageResult>> OrbHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext ctx,Creature target,decimal amount,MegaCrit.Sts2.Core.ValueProps.ValueProp props,Creature dealer)`
 
-来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 301 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -763,7 +1021,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.EffectHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature) — private static Task<IEnumerable<DamageResult>> EffectHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext ctx,IEnumerable<Creature> targets,decimal amount,MegaCrit.Sts2.Core.ValueProps.ValueProp props,Creature dealer)`
 
-来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 305 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.OrbHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature)`](LeagueEffectTargets.cs.md#symbol-144f6521bbaf)
 
@@ -784,7 +1042,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.ThornDamage(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>) — private static IEnumerable<CodeInstruction> ThornDamage(IEnumerable<CodeInstruction> code)`
 
-来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 310 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -805,7 +1063,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.ThornHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?) — private static Task<IEnumerable<DamageResult>> ThornHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext ctx,Creature target,decimal amount,MegaCrit.Sts2.Core.ValueProps.ValueProp props,Creature dealer,CardModel? source,MegaCrit.Sts2.Core.Entities.Cards.CardPlay? play)`
 
-来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 317 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -825,7 +1083,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.EffectEnemies(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Models.AbstractModel) — private static IReadOnlyList<Creature> EffectEnemies(ICombatState state,AbstractModel effect)`
 
-来源：源码第 231 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 322 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -850,7 +1108,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.TeamPlayers(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Models.OrbModel) — private static IReadOnlyList<Player> TeamPlayers(ICombatState state,OrbModel orb)`
 
-来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 327 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -872,7 +1130,7 @@ private static Harmony _leagueHarmony=null!;
 
 ## `NationalSpire.LeagueNativeMatch.CardOpponents(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Models.CardModel) — private static IReadOnlyList<Creature> CardOpponents(ICombatState state,CardModel card)`
 
-来源：源码第 237 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 328 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

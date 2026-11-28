@@ -1,4 +1,5 @@
 using Godot;
+using System.Reflection;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Animation;
@@ -145,7 +146,10 @@ public static partial class LeagueNativeMatch
                 if(t==null||AccessTools.DeclaredMethod(t,method) is not {} m)return;
                 h.Patch(async?AccessTools.AsyncMoveNext(m):m,transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(LeagueOwner)));
             }
-            OwnerPatch("Commands.Builders.AttackCommand","Execute");
+            // 114 将选取随机目标移入 ExecuteInternal，外层 Execute 另行处理死亡与注销。
+            const string attackCommand="Commands.Builders.AttackCommand";
+            var attackType=typeof(PowerModel).Assembly.GetType("MegaCrit.Sts2.Core."+attackCommand)!;
+            OwnerPatch(attackCommand,AccessTools.DeclaredMethod(attackType,"ExecuteInternal")!=null?"ExecuteInternal":"Execute");
             OwnerPatch("Models.Powers.HellraiserPower","BeforeAttack",false);
             // 这些卡从战斗记录的执行者读取玩家身份。只适配实际使用这种读取方式的计数条件。
             foreach(var card in new[]{typeof(MegaCrit.Sts2.Core.Models.Cards.HelixDrill),typeof(MegaCrit.Sts2.Core.Models.Cards.Voltaic)})
@@ -154,7 +158,9 @@ public static partial class LeagueNativeMatch
                         && PatchProcessor.ReadMethodBody(method).Any(op=>Equals(op.Value,AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player)))))
                         h.Patch(method,transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(LeagueOwner)));
             var tune=typeof(PowerModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Powers.TunePower");
-            if(tune!=null){var m=AccessTools.DeclaredMethod(tune,"AfterSideTurnEnd");h.Patch(m,prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(MelodySide)));}
+            // 旧版在回合结束时读取阵营；新版按出牌者触发，无需调整阵营。
+            if(tune?.GetMethod("AfterSideTurnEnd", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly) is {} tuneTurnEnd)
+                h.Patch(tuneTurnEnd,prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(MelodySide)));
             var eyes=typeof(CardModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Cards.GoForTheEyes");
             if(eyes!=null)h.Patch(AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(eyes,"OnPlay")),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(IntentReader)));
             InstallEffectTargets(h);InstallVisuals(h);LeagueDuel.InstallSelections(h);_installed=true;
@@ -162,7 +168,7 @@ public static partial class LeagueNativeMatch
         }catch{RemoveBattlePatches(h);throw;}
     }
     private static void RemoveBattlePatches(Harmony h){
-        h.UnpatchAll(h.Id);EffectPatches.Clear();SeenPowers.Clear();_installed=false;
+        h.UnpatchAll(h.Id);EffectPatches.Clear();SeenPowers.Clear();SeenTargetCards.Clear();_installed=false;
     }
     private static void InstallExternalTurnSetup(Harmony harmony){
         var solver=MegaCrit.Sts2.Core.Modding.ModManager.Mods.FirstOrDefault(mod=>

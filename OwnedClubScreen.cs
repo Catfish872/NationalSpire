@@ -27,8 +27,6 @@ public partial class CareerScreen
         if (!CanManageClub) button.TooltipText = "由房主管理俱乐部";
         return button;
     }
-    private void RefreshClub()
-    { int y = _scroll.ScrollVertical; Render(); _ = RestoreScrollAsync(y, _renderVersion); }
     private OptionButton ClubSelect(string[] labels, int index, Action<int> changed)
     {
         var select = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(180, 46), Disabled = !CanManageClub };
@@ -42,7 +40,7 @@ public partial class CareerScreen
     {
         if (MultiplayerCommand("owned-" + kind, target, text, accepted: success)) return;
         var error = OwnedClubs.Command(data, kind, target, text);
-        if (error == null) success?.Invoke(); RefreshClub(); Notice(error ?? "已完成", error != null);
+        if (error == null) success?.Invoke(); RenderKeepingScroll(); Notice(error ?? "已完成", error != null);
     }
     private void ClubInvitation(CareerData d)
     {
@@ -103,10 +101,10 @@ public partial class CareerScreen
             summary.AddChild(Button("查看合同结算  →", () => { _clubStep = 2; Render(); }, 240));
             foreach (var s in draft.Signings.ToList())
             {
-                summary.AddChild(Button($"已选  {CareerEngine.DisplayName(d, s.PersonId)} · {s.Position} · {OwnedClubs.PlanName(s.Plan)}    移除", () => { draft.Signings.Remove(s); RefreshClub(); }, 0));
+                summary.AddChild(Button($"已选  {CareerEngine.DisplayName(d, s.PersonId)} · {s.Position} · {OwnedClubs.PlanName(s.Plan)}    移除", () => { draft.Signings.Remove(s); RenderKeepingScroll(); }, 0));
                 var p = CareerEngine.Person(d, s.PersonId)!;
                 string[] positions = ["首发", "轮换", "青训", "教练"];
-                summary.AddChild(ClubSelect(positions, Array.IndexOf(positions, s.Position), i => { s.Position = positions[i]; RefreshClub(); }));
+                summary.AddChild(ClubSelect(positions, Array.IndexOf(positions, s.Position), i => { s.Position = positions[i]; RenderKeepingScroll(); }));
             }
             ClubMarket(d, true);
         }
@@ -143,9 +141,9 @@ public partial class CareerScreen
             var row = InfoRow(box);
             string[] plans = ["steady", "performance", "growth"];
             if (!plans.Contains(selection.Plan)) selection.Plan = plans[0];
-            ChoiceField(row, "合同").AddChild(ClubSelect(plans.Select(OwnedClubs.PlanName).ToArray(), Array.IndexOf(plans, selection.Plan), i => { selection.Plan = plans[i]; RefreshClub(); }));
+            ChoiceField(row, "合同").AddChild(ClubSelect(plans.Select(OwnedClubs.PlanName).ToArray(), Array.IndexOf(plans, selection.Plan), i => { selection.Plan = plans[i]; RenderKeepingScroll(); }));
             string[] roles = ["首发", "轮换", "青训", "教练"];
-            ChoiceField(row, "席位").AddChild(ClubSelect(roles, Array.IndexOf(roles, selection.Position), i => { selection.Position = roles[i]; RefreshClub(); }));
+            ChoiceField(row, "席位").AddChild(ClubSelect(roles, Array.IndexOf(roles, selection.Position), i => { selection.Position = roles[i]; RenderKeepingScroll(); }));
             if (!draftMode && selection.Position == "首发")
             {
                 var replacements = OwnedClubs.ReplaceableStarters(d);
@@ -169,7 +167,7 @@ public partial class CareerScreen
             var add = ClubButton(draftMode ? "加入签约草案" : selection.Position == "教练" ? "签约这位教练" : "签约这位选手", () =>
             {
                 var signing = new ClubSigning { PersonId = p.Id, Plan = selection.Plan, Position = selection.Position, ReplaceId = selection.ReplaceId };
-                if (draftMode) { _clubDraft!.Signings.Add(signing); RefreshClub(); }
+                if (draftMode) { _clubDraft!.Signings.Add(signing); RenderKeepingScroll(); }
                 else ShowCareerDialog("确认签约", $"{p.PublicName} · {signing.Position}\n初付 {CareerMoney.Format(q.Signing)}，周薪 {CareerMoney.Format(q.Wage)}，获胜奖金 {CareerMoney.Format(q.WinBonus)}。合约到期自动续约。", () => { ClubAction(d, "recruit", JsonSerializer.Serialize(signing)); return true; });
             }, 220);
             bool full = selection.Position == "首发" && (draftMode ? _clubDraft!.Signings.Count(s => s.Position == "首发") >= OwnedClubs.RequiredAiStarters(d) : selection.ReplaceId.Length == 0);
@@ -258,15 +256,15 @@ public partial class CareerScreen
         string[] plans = ["steady", "performance", "growth"];
         if (!plans.Contains(selection.Plan)) selection.Plan = plans[0];
         string[] positions = ["首发", "轮换", "青训", "教练"];
-        box.AddChild(ClubSelect(plans.Select(OwnedClubs.PlanName).ToArray(), Array.IndexOf(plans, selection.Plan), i => { selection.Plan = plans[i]; RefreshClub(); }));
-        box.AddChild(ClubSelect(positions, Array.IndexOf(positions, selection.Position), i => { selection.Position = positions[i]; RefreshClub(); }));
+        box.AddChild(ClubSelect(plans.Select(OwnedClubs.PlanName).ToArray(), Array.IndexOf(plans, selection.Plan), i => { selection.Plan = plans[i]; RenderKeepingScroll(); }));
+        box.AddChild(ClubSelect(positions, Array.IndexOf(positions, selection.Position), i => { selection.Position = positions[i]; RenderKeepingScroll(); }));
         if (selection.Position == "首发")
         {
             var replacements = OwnedClubs.ReplaceableStarters(d);
             if (replacements.Count > 0)
             {
                 if (!replacements.Contains(selection.ReplaceId)) selection.ReplaceId = replacements[0];
-                box.AddChild(ClubSelect(replacements.Select(id => (transfer && OwnedClubs.TransferSeason(d) > d.Season ? "下赛季转为轮换 · " : "转为轮换 · ") + CareerEngine.DisplayName(d, id)).ToArray(), replacements.IndexOf(selection.ReplaceId), i => { selection.ReplaceId = replacements[i]; RefreshClub(); }));
+                box.AddChild(ClubSelect(replacements.Select(id => (transfer && OwnedClubs.TransferSeason(d) > d.Season ? "下赛季转为轮换 · " : "转为轮换 · ") + CareerEngine.DisplayName(d, id)).ToArray(), replacements.IndexOf(selection.ReplaceId), i => { selection.ReplaceId = replacements[i]; RenderKeepingScroll(); }));
             }
             else selection.ReplaceId = "";
         }
@@ -298,7 +296,7 @@ public partial class CareerScreen
         box = ClubCard("俱乐部赞助");
         string[] sponsors = ["steady", "results", "fans"];
         string[] plans = ["稳定经营", "胜场奖励", "关注收益"];
-        box.AddChild(ClubSelect(sponsors.Select((id, i) => OwnedClubs.SponsorQuote(d, id).Brand + " · " + plans[i]).ToArray(), Array.IndexOf(sponsors, draft.Sponsor), i => { draft.Sponsor = sponsors[i]; RefreshClub(); }));
+        box.AddChild(ClubSelect(sponsors.Select((id, i) => OwnedClubs.SponsorQuote(d, id).Brand + " · " + plans[i]).ToArray(), Array.IndexOf(sponsors, draft.Sponsor), i => { draft.Sponsor = sponsors[i]; RenderKeepingScroll(); }));
         var sponsor = OwnedClubs.SponsorQuote(d, draft.Sponsor);
         box.AddChild(Text(RegionalOrganizations.SponsorDescription(sponsor.Brand), 16, _muted));
         box.AddChild(Text($"每次获胜的基础赞助奖金 {CareerMoney.Format(sponsor.WinBonus)}，随俱乐部关注提高；选手奖金另付。", 17, _muted));
@@ -345,7 +343,7 @@ public partial class CareerScreen
         foreach (var state in new[]{"font_color","font_hover_color","font_focus_color","font_pressed_color"})
             leave.AddThemeColorOverride(state,new Color("f39da1"));
         foreach (string section in new[] { "阵容", "招募", "赞助", "账目", "其他俱乐部" })
-            tabs.AddChild(Button((_ownerSection == section ? "● " : "") + section, () => { if (_ownerSection != section) { _ownerSection = section; RefreshClub(); } }, 150));
+            tabs.AddChild(Button((_ownerSection == section ? "● " : "") + section, () => { if (_ownerSection != section) { _ownerSection = section; RenderKeepingScroll(); } }, 150));
         if (_ownerSection == "其他俱乐部") { ClubDirectory(d); return; }
         if (_ownerSection == "招募") { ClubMarket(d, false); return; }
         if (_ownerSection == "赞助")

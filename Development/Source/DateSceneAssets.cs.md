@@ -633,7 +633,7 @@
 
 来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`ShowRows()`](PeoplePickerScreen.cs.md#symbol-2c92b42fbd16)
+**调用者：** [`ShowRows()`](PeoplePickerScreen.cs.md#symbol-7cae152fce09)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.BlobPath(string)`](DateSceneAssets.cs.md#symbol-1b33c2ffb1f6)；[`NationalSpire.DateSceneAssetStore.IsImageHash(string?)`](DateSceneAssets.cs.md#symbol-6a531e6017f4)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.IO.File.Exists(string?)`
 

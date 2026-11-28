@@ -65,7 +65,7 @@ public partial class CareerScreen
         _communityCaption.Text=count>0?$"{count} 条更新":"";
         _updatesButton.TooltipText = count > 0 ? $"{count} 个帖子有更新" : "社区";
     }
-    private void OpenUpdates() => Visit(() => { _tab = "社区"; _postId = null; _communityFilter = "未读更新"; });
+    private void OpenUpdates() => Visit(() => { _tab = "社区"; _postId = null; _openUnreadUpdates = true; });
     private void RenderThread(CareerData data, CommunityPost post)
     {
         if (!CommunityThreads.All(data).Any(p => p.Id == post.Id)) data.SavedThreads.Add(post);

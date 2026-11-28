@@ -69,7 +69,7 @@ CompetitionScore.Duels 保存该张总比分卡包含的 CompetitionDuel 列表�
 
 CareerData.SelectedMode 保存最近模式，缺省为 Standard；SelectedAscension 保存普通进阶，SelectedBlitzAscension 保存快速进阶，缺省按赛事下限选取。CareerMatch.ChosenMode 缺省按普通模式读取，ChosenAscension 保存比赛记录进阶。CareerResult.Mode、CoopProposal.Mode 与 CoopRun.Mode 缺省为 Standard；CoopRun.Ascension 保存原生进阶。
 
-CareerMatch.DreadDominions 按幕保存实际整幕效果提供者编号与完整强化说明。DreadFacts.Capture 读取实际所选遭遇，有第二位首领时使用第二位作为提供者。Description 分别说明普通战斗、精英战斗及首领战的恐惧变化；双首领幕记录两位首领的自身强化，附注仍只属于实际整幕效果提供者。沿途文字复用游戏中文资源，墨影幻灵、瀑布巨兽、知识恶魔、无厌沙虫与实验体补充实际数值、条件和触发时机；首领自身强化集中维护当前游戏12种首领的变化。说明采用游戏中文名称，包括滑溜、覆甲、蒸汽喷发、激怒、凋萎和呼唤。
+CareerMatch.DreadDominions 按幕保存实际整幕效果提供者编号与完整强化说明。DreadFacts.Capture 读取实际所选遭遇，有第二位首领时使用第二位作为提供者。Description 先记录该首领对应的整幕支配原文，再记录首领自身强化。双首领幕分别列出两位首领的自身强化。12 条支配说明来自 114 简体中文资源，编写时填入单人数值。已保存且首领编号相同的说明沿用原记录。说明采用游戏中文名称，包括滑溜、覆甲、蒸汽喷发、激怒、凋萎和呼唤。
 
 快照随原比赛检查点保存，同幕同首领复用。RunEncounter.DreadEffect 仅写入实际提供效果且已击败的首领，空值省略。ForPrompt 在原 Name 字段添加说明，Act、Floor、Kind 与 Name 结构保持原格式。旧记录缺少模式时为普通模式，缺少效果时保留原战报。精英、中途首领与双首领继续来自实际已完成历史。模式字段为常数大小，每幕最多一项说明，随原检查点和广播传递。
 

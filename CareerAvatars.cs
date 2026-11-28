@@ -44,25 +44,6 @@ public static class CareerAvatars
     }
 }
 
-// Both the native option button and its popup draw the same framed portrait as a character tile.
-internal partial class CareerAvatarIcon : Texture2D
-{
-    internal const int Pixels = 48;
-    internal AvatarArt Art { get; init; } = new(null, CareerVisuals.Teal, "");
-    private StyleBoxFlat? _frame;
-    public override int _GetWidth() => Pixels;
-    public override int _GetHeight() => Pixels;
-    public override bool _HasAlpha() => true;
-    public override void _Draw(Rid canvas, Vector2 pos, Color modulate, bool transpose) =>
-        _DrawRect(canvas, new Rect2(pos, new Vector2(Pixels, Pixels)), false, modulate, transpose);
-    public override void _DrawRect(Rid canvas, Rect2 rect, bool tile, Color modulate, bool transpose)
-    {
-        _frame ??= CareerAvatar.PortraitFrame(Art);
-        _frame.Draw(canvas, rect);
-        CareerAvatar.DrawFace(canvas, rect, rect.Grow(-CareerAvatar.ArtworkInset * rect.Size.X / Pixels), Art, modulate);
-    }
-}
-
 public partial class CareerAvatar : Control
 {
     internal const float ArtworkInset = 4;

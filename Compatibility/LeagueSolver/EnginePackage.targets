@@ -1,21 +1,22 @@
 <Project>
   <PropertyGroup>
     <PackageRoot>$(MSBuildProjectDirectory)/obj/packages</PackageRoot>
-    <KernelArchive>CombatSolver-0.51.4.zip</KernelArchive>
-    <LibraryArchive>STS2-RitsuLib.0.6.12.variant-pack.zip</LibraryArchive>
+    <KernelArchive>CombatSolver-1.0.3.zip</KernelArchive>
+    <LibraryArchive>STS2-RitsuLib.0.6.16.variant-pack.zip</LibraryArchive>
+    <EngineRoot>$(PackageRoot)/$(KernelArchive)-$(LibraryArchive)</EngineRoot>
   </PropertyGroup>
-  <Target Name="PrepareLeagueEngine" BeforeTargets="ResolveAssemblyReferences;PrepareResources" Inputs="$(MSBuildThisFileFullPath)" Outputs="$(PackageRoot)/embedded.zip;$(PackageRoot)/solver/CombatSolver.dll">
+  <Target Name="PrepareLeagueEngine" BeforeTargets="ResolveAssemblyReferences;PrepareResources" Inputs="$(MSBuildThisFileFullPath);$(MSBuildThisFileDirectory)CombatSolver-LICENSE;$(MSBuildThisFileDirectory)CombatSolver-THIRD_PARTY_NOTICES.txt;$(MSBuildThisFileDirectory)RitsuLib-LICENSE" Outputs="$(PackageRoot)/embedded.zip;$(EngineRoot)/solver/CombatSolver.dll">
     <MakeDir Directories="$(PackageRoot)" />
-    <DownloadFile SourceUrl="https://github.com/Torch1230/CombatSolver/releases/download/v0.51.4/$(KernelArchive)" DestinationFolder="$(PackageRoot)" Condition="!Exists('$(PackageRoot)/$(KernelArchive)')" />
-    <DownloadFile SourceUrl="https://github.com/BAKAOLC/STS2-RitsuLib/releases/download/v0.6.12/$(LibraryArchive)" DestinationFolder="$(PackageRoot)" Condition="!Exists('$(PackageRoot)/$(LibraryArchive)')" />
-    <VerifyFileHash File="$(PackageRoot)/$(KernelArchive)" Hash="eea761bfc045a0f99f336081e8f460065e853e8482806a8bed0256ab3009bed5" Algorithm="SHA256" />
-    <VerifyFileHash File="$(PackageRoot)/$(LibraryArchive)" Hash="0ba8f3a99ad62e1c3fb6318aeaa4768501cff923d76e184cc6e7b284c71f00ab" Algorithm="SHA256" />
-    <Unzip SourceFiles="$(PackageRoot)/$(KernelArchive)" DestinationFolder="$(PackageRoot)/solver" />
-    <Unzip SourceFiles="$(PackageRoot)/$(LibraryArchive)" DestinationFolder="$(PackageRoot)/library" />
+    <DownloadFile SourceUrl="https://github.com/Torch1230/CombatSolver/releases/download/v1.0.3/$(KernelArchive)" DestinationFolder="$(PackageRoot)" Condition="!Exists('$(PackageRoot)/$(KernelArchive)')" />
+    <DownloadFile SourceUrl="https://github.com/BAKAOLC/STS2-RitsuLib/releases/download/v0.6.16/$(LibraryArchive)" DestinationFolder="$(PackageRoot)" Condition="!Exists('$(PackageRoot)/$(LibraryArchive)')" />
+    <VerifyFileHash File="$(PackageRoot)/$(KernelArchive)" Hash="ad3f59bbd7f79c7c3b7676dd1430f4bf57310553289681b5957b1080174581b6" Algorithm="SHA256" />
+    <VerifyFileHash File="$(PackageRoot)/$(LibraryArchive)" Hash="8db2b197f636f3ff9aed3b50cb83bb21a2363a566c1b330790c2ca33e73a49ea" Algorithm="SHA256" />
+    <Unzip SourceFiles="$(PackageRoot)/$(KernelArchive)" DestinationFolder="$(EngineRoot)/solver" />
+    <Unzip SourceFiles="$(PackageRoot)/$(LibraryArchive)" DestinationFolder="$(EngineRoot)/library" />
     <ItemGroup>
-      <EngineFiles Include="$(PackageRoot)/solver/CombatSolver.dll;$(PackageRoot)/library/shared/*.dll;$(PackageRoot)/library/compat/0.113.0/*.dll;$(MSBuildThisFileDirectory)CombatSolver-LICENSE;$(MSBuildThisFileDirectory)CombatSolver-THIRD_PARTY_NOTICES.txt;$(MSBuildThisFileDirectory)RitsuLib-LICENSE" />
+      <EngineFiles Include="$(EngineRoot)/solver/CombatSolver.dll;$(EngineRoot)/library/shared/*.dll;$(EngineRoot)/library/compat/0.114.0/*.dll;$(MSBuildThisFileDirectory)CombatSolver-LICENSE;$(MSBuildThisFileDirectory)CombatSolver-THIRD_PARTY_NOTICES.txt;$(MSBuildThisFileDirectory)RitsuLib-LICENSE" />
     </ItemGroup>
-    <Copy SourceFiles="@(EngineFiles)" DestinationFolder="$(PackageRoot)/runtime" />
-    <ZipDirectory SourceDirectory="$(PackageRoot)/runtime" DestinationFile="$(PackageRoot)/embedded.zip" Overwrite="true" />
+    <Copy SourceFiles="@(EngineFiles)" DestinationFolder="$(EngineRoot)/runtime" />
+    <ZipDirectory SourceDirectory="$(EngineRoot)/runtime" DestinationFile="$(PackageRoot)/embedded.zip" Overwrite="true" />
   </Target>
 </Project>

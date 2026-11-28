@@ -2,9 +2,13 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Platform;
+using MegaCrit.Sts2.Core.Multiplayer.Game;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -15,10 +19,21 @@ public static partial class LeagueNativeMatch {
     // 从原方法中取得实际卡牌、能力或球的实例，因此同一个回合内双方各自触发的效果不会串用阵营。
     private static readonly HashSet<MethodBase> EffectPatches=[];
     private static readonly HashSet<Type> SeenPowers=[];
+    private static readonly HashSet<Type> SeenTargetCards=[];
+    private static readonly Dictionary<Type,MethodInfo[]> TargetMethods=[];
     private static Harmony _leagueHarmony=null!;
     private static void InstallEffectTargets(Harmony h){
         h.Patch(AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.IsSecondaryEnemy)),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelPet)));
         _leagueHarmony=h;
+        h.Patch(AccessTools.DeclaredMethod(typeof(CardModel),nameof(CardModel.OnPlayWrapper)),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareCardTargets)));
+        h.Patch(AccessTools.DeclaredMethod(typeof(MultiplayerScalingModel),nameof(MultiplayerScalingModel.ModifyBlockMultiplicative)),
+            postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelBlockScaling)));
+        foreach(var power in new[]{typeof(FlankingPower),typeof(KnockdownPower),typeof(GuardedPower),typeof(CoveredPower)}){
+            var applied=AccessTools.DeclaredMethod(power,nameof(PowerModel.AfterApplied));
+            var body=applied.GetCustomAttribute<System.Runtime.CompilerServices.AsyncStateMachineAttribute>()?.StateMachineType;
+            h.Patch(body==null?applied:AccessTools.DeclaredMethod(body,"MoveNext"),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterNames)));
+        }
+        h.Patch(AccessTools.DeclaredMethod(typeof(InterceptPower),"RefreshCoveringNames"),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FighterNames)));
         h.Patch(AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(CardCmd),"AutoPlay")),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(AutoPlayTeams)));
         h.Patch(AccessTools.DeclaredMethod(typeof(CardCmd),"AutoPlay"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareAutoPlay)));
         var listeners=AccessTools.EnumeratorMoveNext(AccessTools.DeclaredMethod(typeof(CombatState),"IterateHookListeners"));
@@ -83,7 +98,83 @@ public static partial class LeagueNativeMatch {
         }
     }
     private static IReadOnlyList<Creature> SummonerTeam(ICombatState state,Player p)=>For(p)!=null?state.GetTeammatesOf(p.Creature):state.Allies;
-    // 对手实际首次获得某个能力时才检查该类型。只替换“能力持有者的玩家资料”，不改变判断召唤物、怪物或受击者的逻辑。
+    // 原版通过施加者的账户显示姓名。对决中的敌方选手使用生涯姓名。
+    private static IEnumerable<CodeInstruction> FighterNames(IEnumerable<CodeInstruction> instructions){
+        var code=instructions.ToArray();
+        var player=AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player));
+        var id=AccessTools.PropertyGetter(typeof(Player),nameof(Player.NetId));
+        var name=AccessTools.Method(typeof(PlatformUtil),nameof(PlatformUtil.GetPlayerName));
+        for(int i=0;i+2<code.Length;i++){
+            if(!code[i].Calls(player)||!code[i+1].Calls(id)||!code[i+2].Calls(name))continue;
+            code[i].opcode=code[i+1].opcode=OpCodes.Nop;
+            code[i].operand=code[i+1].operand=null;
+            code[i+2].operand=AccessTools.Method(typeof(LeagueNativeMatch),nameof(FighterDisplayName));
+        }
+        return code;
+    }
+    private static string FighterDisplayName(PlatformType platform,Creature fighter)=>For(fighter) is {} duel
+        ?duel.OpponentName.EscapeBbcodeTags():PlatformUtil.GetPlayerName(platform,fighter.Player!.NetId);
+
+    private static void DuelBlockScaling(Creature? target,ref decimal __result){
+        if(Current!=null && __result!=1m && target!=null && target.CombatState==_room?.CombatState &&
+            (For(target)!=null||For(target.PetOwner)!=null))__result=1m;
+    }
+
+    private static bool GeneratesCard(MethodInfo call)=>call.DeclaringType==typeof(CardPileCmd)
+        && call.Name==nameof(CardPileCmd.AddToCombatAndPreview) && call.IsGenericMethod;
+
+    private static void PrepareCardTargets(CardModel __instance){
+        var cardType=__instance.GetType();
+        if(Current==null||!SeenTargetCards.Add(cardType))return;
+        if(!TargetMethods.TryGetValue(cardType,out var methods))
+            TargetMethods[cardType]=methods=CardTargetMethods(__instance).ToArray();
+        foreach(var method in methods)
+            _leagueHarmony.Patch(method,transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(AllyTargetPlayer)));
+    }
+    private static IEnumerable<MethodInfo> CardTargetMethods(CardModel card){
+        var target=AccessTools.PropertyGetter(typeof(MegaCrit.Sts2.Core.Entities.Cards.CardPlay),"Target");
+        var player=AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player));
+        foreach(var type in Nested(card.GetType()))foreach(var method in AccessTools.GetDeclaredMethods(type)){
+            if(method.GetMethodBody()==null)continue;
+            var body=PatchProcessor.ReadMethodBody(method).ToArray();
+            if(body.Any(i=>i.Value is MethodInfo call && GeneratesCard(call)) ||
+                (card.TargetType==TargetType.AnyAlly && body.Zip(body.Skip(1)).Any(p=>Equals(p.First.Value,target)&&Equals(p.Second.Value,player))))
+                yield return method;
+        }
+    }
+    private static IEnumerable<CodeInstruction> AllyTargetPlayer(IEnumerable<CodeInstruction> instructions){
+        var target=AccessTools.PropertyGetter(typeof(MegaCrit.Sts2.Core.Entities.Cards.CardPlay),"Target");
+        var player=AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player));
+        bool afterTarget=false;
+        foreach(var instruction in instructions){
+            if(instruction.operand is MethodInfo call && GeneratesCard(call)){
+                string name=call.GetParameters()[0].ParameterType==typeof(Creature)?nameof(GenerateForTarget):nameof(GenerateForTargets);
+                instruction.operand=AccessTools.DeclaredMethod(typeof(LeagueNativeMatch),name).MakeGenericMethod(call.GetGenericArguments());
+            }
+            if(afterTarget&&instruction.Calls(player)){
+                instruction.opcode=OpCodes.Call;
+                instruction.operand=AccessTools.Method(typeof(LeagueNativeMatch),nameof(LeaguePlayer));
+            }
+            afterTarget=instruction.Calls(target);
+            yield return instruction;
+        }
+    }
+
+    private static async Task GenerateForTargets<T>(IEnumerable<Creature> targets,PileType pileType,int count,Player? creator,CardPilePosition position) where T:CardModel{
+        foreach(var target in targets)await GenerateForTarget<T>(target,pileType,count,creator,position);
+    }
+    private static Task GenerateForTarget<T>(Creature target,PileType pileType,int count,Player? creator,CardPilePosition position) where T:CardModel{
+        if(Current!=null && For(target) is {} fighter && target.CombatState is {} state)
+            return AddToRival();
+        return CardPileCmd.AddToCombatAndPreview<T>(target,pileType,count,creator,position);
+        async Task AddToRival(){
+            if(target.IsDead)return;
+            for(int i=0;i<count;i++)
+                await CardPileCmd.AddGeneratedCardToCombat(state.CreateCard<T>(fighter.Rival),pileType,creator,position);
+        }
+    }
+
+    // 首次向敌方选手施加能力时才检查持有者的玩家资料读取。
     private static void PreparePowerOwner(PowerModel __instance,Creature owner){
         if(For(owner)==null||__instance.GetType().Assembly!=typeof(PowerModel).Assembly||!SeenPowers.Add(__instance.GetType()))return;
         foreach(var type in Nested(__instance.GetType()))foreach(var method in AccessTools.GetDeclaredMethods(type)){
